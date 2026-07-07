@@ -1,8 +1,11 @@
 [gd_scene format=4 uid="uid://ix3cebvvls0j"]
 
 [ext_resource type="Texture2D" uid="uid://dvcoxm2vvvhps" path="res://Asset/Screenshot 2026-07-06 151729.png" id="1_ctr27"]
+[ext_resource type="PackedScene" uid="uid://sck6tmm11m34" path="res://scenes/Systems/Pooler/carried_object.tscn" id="2_2jp0x"]
 [ext_resource type="Texture2D" uid="uid://34bswe7d45e6" path="res://icon.svg" id="2_ihfs7"]
-[ext_resource type="Script" uid="uid://81nlhqlit4j8" path="res://Scenes/Game/selection_rect.gd" id="3_ihfs7"]
+[ext_resource type="Script" uid="uid://bkqtct8ws50cu" path="res://scenes/Systems/Pooler/carried_object_pooler.gd" id="3_3iobd"]
+[ext_resource type="Script" uid="uid://81nlhqlit4j8" path="res://scenes/Game/selection_rect.gd" id="3_ihfs7"]
+[ext_resource type="Script" uid="uid://ccls4ar2wll7w" path="res://scenes/Systems/game_manager.gd" id="6_8jgro"]
 
 [sub_resource type="GDScript" id="GDScript_c53t7"]
 
@@ -322,3 +325,13 @@ texture = ExtResource("2_ihfs7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3" unique_id=123770805]
 shape = SubResource("RectangleShape2D_ihfs7")
+
+[node name="CarriedObjectPooler" type="Node" parent="." unique_id=77116917 node_paths=PackedStringArray("game_manager")]
+script = ExtResource("3_3iobd")
+game_manager = NodePath("../GameManager")
+object_scene = ExtResource("2_2jp0x")
+metadata/_custom_type_script = "uid://bkqtct8ws50cu"
+
+[node name="GameManager" type="Node" parent="." unique_id=1111724406]
+script = ExtResource("6_8jgro")
+metadata/_custom_type_script = "uid://ccls4ar2wll7w"
