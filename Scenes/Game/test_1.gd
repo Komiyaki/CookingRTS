@@ -1,6 +1,6 @@
 extends Node2D
 
-const MOVE_SPEED: float = 50.0
+const MOVE_SPEED: float = 200.0
 var target_pos: Vector2
 @onready var selector = $Selector
 

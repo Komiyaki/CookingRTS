@@ -9,6 +9,11 @@ const CLICK_SELECT_SIZE := Vector2(60, 60)
 
 
 func _input(e: InputEvent) -> void:
+	if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_RIGHT and e.pressed:
+		var target_pos: Vector2 = screen_to_world(e.position)
+		move_selected_units(target_pos)
+		return
+		
 	if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
 		if e.pressed:
 			selecting = true
@@ -33,7 +38,14 @@ func _input(e: InputEvent) -> void:
 		queue_redraw()
 
 func move_selected_units(pos: Vector2):
-	var units
+	var units := get_tree().get_nodes_in_group("selected-units")
+	if units.size() == 0:
+		return
+	var ref_unit = units[0]
+	var ref_pos: Vector2 = ref_unit.global_position
+	for unit in units:
+		var offset: Vector2 = unit.global_position - ref_pos
+		unit.move(pos + offset)
 
 func _draw() -> void:
 	if not selecting:
@@ -53,3 +65,7 @@ func update_selected_units(additive: bool) -> void:
 func clear_selected_units() -> void:
 	for unit in get_tree().get_nodes_in_group("selected-units"):
 		unit.deselect()
+
+func screen_to_world(screen_pos: Vector2) -> Vector2:
+	var canvas_transform := get_viewport().get_canvas_transform()
+	return canvas_transform.affine_inverse() * screen_pos
