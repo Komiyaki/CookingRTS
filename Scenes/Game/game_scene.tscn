@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://csq3jirq3fpmg" path="res://Scenes/Game/test_1.gd" id="5_u63k7"]
 [ext_resource type="Script" uid="uid://ccls4ar2wll7w" path="res://Scenes/Systems/game_manager.gd" id="6_8jgro"]
 [ext_resource type="Script" uid="uid://dh3qds0vllotc" path="res://Scenes/Game/unit_selector.gd" id="6_m6pt0"]
+[ext_resource type="Script" uid="uid://2hammvmw41m1" path="res://Scenes/Systems/little_guy_group_manager.gd" id="6_wsift"]
 
 [sub_resource type="GDScript" id="GDScript_c53t7"]
 
@@ -305,43 +306,52 @@ metadata/_custom_type_script = "uid://bkqtct8ws50cu"
 script = ExtResource("6_8jgro")
 metadata/_custom_type_script = "uid://ccls4ar2wll7w"
 
-[node name="Test1" type="Node2D" parent="." unique_id=864846428]
+[node name="LittleGuys" type="Node2D" parent="." unique_id=62857576]
+
+[node name="Test1" type="Node2D" parent="LittleGuys" unique_id=864846428]
 position = Vector2(280, 159)
 script = ExtResource("5_u63k7")
 
-[node name="Sprite2D" type="Sprite2D" parent="Test1" unique_id=2044446889]
+[node name="Sprite2D" type="Sprite2D" parent="LittleGuys/Test1" unique_id=2044446889]
 texture = ExtResource("2_ihfs7")
 
-[node name="Selector" type="Line2D" parent="Test1" unique_id=380109030]
+[node name="Selector" type="Line2D" parent="LittleGuys/Test1" unique_id=380109030]
 points = PackedVector2Array(62, -59, 61, 61, -63, 62, -63, -60, 61, -60)
 width = 3.0
 default_color = Color(1, 1, 0.09411765, 1)
 
-[node name="Test3" type="Node2D" parent="." unique_id=2087328387]
+[node name="Test3" type="Node2D" parent="LittleGuys" unique_id=2087328387]
 position = Vector2(398, 310)
 script = ExtResource("5_u63k7")
 
-[node name="Sprite2D" type="Sprite2D" parent="Test3" unique_id=1777921410]
+[node name="Sprite2D" type="Sprite2D" parent="LittleGuys/Test3" unique_id=1777921410]
 texture = ExtResource("2_ihfs7")
 
-[node name="Selector" type="Line2D" parent="Test3" unique_id=1574779053]
+[node name="Selector" type="Line2D" parent="LittleGuys/Test3" unique_id=1574779053]
 points = PackedVector2Array(62, -59, 61, 61, -63, 62, -63, -60, 61, -60)
 width = 2.92
 default_color = Color(1, 1, 0.09411765, 1)
 
-[node name="Test2" type="Node2D" parent="." unique_id=1846173899]
+[node name="Test2" type="Node2D" parent="LittleGuys" unique_id=1846173899]
 position = Vector2(482, 155)
 script = ExtResource("5_u63k7")
 
-[node name="Sprite2D" type="Sprite2D" parent="Test2" unique_id=1030591015]
+[node name="Sprite2D" type="Sprite2D" parent="LittleGuys/Test2" unique_id=1030591015]
 texture = ExtResource("2_ihfs7")
 
-[node name="Selector" type="Line2D" parent="Test2" unique_id=1793752271]
+[node name="Selector" type="Line2D" parent="LittleGuys/Test2" unique_id=1793752271]
 points = PackedVector2Array(62, -59, 61, 61, -63, 62, -63, -60, 61, -60)
 width = 3.0
 default_color = Color(1, 1, 0.09411765, 1)
 
-[node name="UnitSelector" type="Control" parent="." unique_id=117457147]
+[node name="Groups" type="Node2D" parent="." unique_id=1414945744]
+
+[node name="GroupManager" type="Node2D" parent="Groups" unique_id=757561573]
+script = ExtResource("6_wsift")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1174498360]
+
+[node name="UnitSelector" type="Control" parent="CanvasLayer" unique_id=117457147]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("6_m6pt0")

@@ -1,19 +1,28 @@
 extends Control
 
+@export var group_manager_path: NodePath
+@onready var group_manager: LittleGuyGroupManager = get_node(group_manager_path)
+
 var selecting: bool = false
-var drag_start: Vector2
-var select_box: Rect2
+var drag_start: Vector2 = Vector2.ZERO
+var select_box: Rect2 = Rect2()
 
-const CLICK_THRESHOLD := 8.0
-const CLICK_SELECT_SIZE := Vector2(60, 60)
-
+const CLICK_THRESHOLD: float = 8.0
+const CLICK_SELECT_SIZE: Vector2 = Vector2(24, 24)
 
 func _input(e: InputEvent) -> void:
 	if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_RIGHT and e.pressed:
 		var target_pos: Vector2 = screen_to_world(e.position)
-		move_selected_units(target_pos)
+		var selected_units: Array[LittleGuy] = []
+		for unit in get_tree().get_nodes_in_group("selected-units"):
+			if unit is LittleGuy:
+				selected_units.append(unit)
+		if selected_units.size() > 0:
+			var new_group: LittleGuyGroup = group_manager.create_group(selected_units)
+			if new_group != null:
+				new_group.move_group_to(target_pos)
+			clear_selected_units()
 		return
-		
 	if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
 		if e.pressed:
 			selecting = true
@@ -23,49 +32,55 @@ func _input(e: InputEvent) -> void:
 		else:
 			selecting = false
 			var additive: bool = Input.is_key_pressed(KEY_SHIFT)
-			if drag_start.distance_to(e.position) < CLICK_THRESHOLD:
+			var is_click: bool = drag_start.distance_to(e.position) < CLICK_THRESHOLD
+			if is_click:
 				select_box = Rect2(e.position - CLICK_SELECT_SIZE / 2.0,CLICK_SELECT_SIZE)
 			else:
-				var x_min = min(drag_start.x, e.position.x)
-				var y_min = min(drag_start.y, e.position.y)
-				select_box = Rect2(x_min,y_min,max(drag_start.x, e.position.x) - x_min,max(drag_start.y, e.position.y) - y_min)
-			update_selected_units(additive)
+				select_box = make_rect_from_points(drag_start, e.position)
+			update_selected_units(additive, is_click)
 			queue_redraw()
 	elif selecting and e is InputEventMouseMotion:
-		var x_min = min(drag_start.x, e.position.x)
-		var y_min = min(drag_start.y, e.position.y)
-		select_box = Rect2(x_min,y_min,max(drag_start.x, e.position.x) - x_min,max(drag_start.y, e.position.y) - y_min)
+		select_box = make_rect_from_points(drag_start, e.position)
 		queue_redraw()
-
-func move_selected_units(pos: Vector2):
-	var units := get_tree().get_nodes_in_group("selected-units")
-	if units.size() == 0:
-		return
-	var ref_unit = units[0]
-	var ref_pos: Vector2 = ref_unit.global_position
-	for unit in units:
-		var offset: Vector2 = unit.global_position - ref_pos
-		unit.move(pos + offset)
 
 func _draw() -> void:
 	if not selecting:
 		return
 	if select_box.size.length() < CLICK_THRESHOLD:
 		return
-	draw_rect(select_box, Color("#00ff0066"))
+	draw_rect(select_box, Color("#00ff0066"), true)
 	draw_rect(select_box, Color("#00ff00"), false, 2.0)
 
-func update_selected_units(additive: bool) -> void:
+func update_selected_units(additive: bool, is_click: bool) -> void:
 	if not additive:
 		clear_selected_units()
 	for unit in get_tree().get_nodes_in_group("selectable-units"):
+		if not unit.has_method("is_in_selection_box"):
+			continue
 		if unit.is_in_selection_box(select_box):
-			unit.select()
+			if additive and is_click:
+				if unit.is_in_group("selected-units"):
+					unit.deselect()
+				else:
+					unit.select()
+			else:
+				unit.select()
 
 func clear_selected_units() -> void:
 	for unit in get_tree().get_nodes_in_group("selected-units"):
-		unit.deselect()
+		if unit.has_method("deselect"):
+			unit.deselect()
+
+func make_rect_from_points(a: Vector2, b: Vector2) -> Rect2:
+	var x_min: float = min(a.x, b.x)
+	var y_min: float = min(a.y, b.y)
+	var width: float = max(a.x, b.x) - x_min
+	var height: float = max(a.y, b.y) - y_min
+	return Rect2(x_min, y_min, width, height)
 
 func screen_to_world(screen_pos: Vector2) -> Vector2:
 	var canvas_transform := get_viewport().get_canvas_transform()
 	return canvas_transform.affine_inverse() * screen_pos
+
+func _ready() -> void:
+	print("Group manager is: ", group_manager)

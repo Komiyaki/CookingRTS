@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b4owtpdvtfo7i"]
+
+[ext_resource type="Script" uid="uid://bbp8jnbao48gk" path="res://Scenes/Systems/little_guy_group.gd" id="1_5lle3"]
+
+[node name="LittleGuyGroup" type="Node2D" unique_id=1243687650]
+script = ExtResource("1_5lle3")
