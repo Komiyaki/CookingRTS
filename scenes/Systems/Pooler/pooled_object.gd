@@ -14,4 +14,4 @@ func set_inactive() -> void:
     set_deferred("monitoring", false)
     set_deferred("monitorable", false)
     set_process(false)
-    position = Vector2.ONE * 100
+    position = Vector2.ONE * -200
