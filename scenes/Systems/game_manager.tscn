@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://c0lvexnjh2auj"]
+
+[ext_resource type="Script" uid="uid://ccls4ar2wll7w" path="res://scenes/Systems/game_manager.gd" id="1_jgdsd"]
+
+[node name="GameManager" type="Node" unique_id=1000138197 node_paths=PackedStringArray("carried_object_pool")]
+script = ExtResource("1_jgdsd")
+carried_object_pool = NodePath("")
+metadata/_custom_type_script = "uid://ccls4ar2wll7w"
