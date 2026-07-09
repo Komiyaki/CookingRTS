@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dce6j7tm6pgxh"]
+
+[ext_resource type="Script" uid="uid://cy05wye1dldrh" path="res://scenes/game_ui_manager.gd" id="1_rns2u"]
+[ext_resource type="Script" uid="uid://v42fyl7ityev" path="res://scenes/debug_ui_manager.gd" id="2_u001w"]
+
+[node name="GameUI" type="Control" unique_id=1445027906 node_paths=PackedStringArray("debug_ui_manager")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rns2u")
+debug_ui_manager = NodePath("DebugUI")
+
+[node name="DebugUI" type="AspectRatioContainer" parent="." unique_id=855082386 node_paths=PackedStringArray("round_label", "state_label")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_u001w")
+round_label = NodePath("VBoxContainer/RoundLabel")
+state_label = NodePath("VBoxContainer/GaneStateLabel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugUI" unique_id=513071584]
+layout_mode = 2
+
+[node name="GaneStateLabel" type="Label" parent="DebugUI/VBoxContainer" unique_id=2012519911]
+layout_mode = 2
+text = "STATE"
+
+[node name="RoundLabel" type="Label" parent="DebugUI/VBoxContainer" unique_id=175538697]
+layout_mode = 2
+text = "ROUND"
