@@ -1,7 +1,6 @@
 extends Control
 
-@export var group_manager_path: NodePath
-@onready var group_manager: LittleGuyGroupManager = get_node(group_manager_path)
+@onready var group_manager = $"../../Groups/GroupManager"
 
 var selecting: bool = false
 var drag_start: Vector2 = Vector2.ZERO
@@ -12,13 +11,19 @@ const CLICK_SELECT_SIZE: Vector2 = Vector2(24, 24)
 
 func _input(e: InputEvent) -> void:
     if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_RIGHT and e.pressed:
+        print("Right Click detected!")
         var target_pos: Vector2 = screen_to_world(e.position)
+        print("Target Pos:", target_pos)
         var selected_units: Array[LittleGuy] = []
         for unit in get_tree().get_nodes_in_group("selected-units"):
+            print("Found selected unit:", unit)
             if unit is LittleGuy:
                 selected_units.append(unit)
+        print("Selected units count: ", selected_units.size())
+        print("Group manager: ", group_manager)
         if selected_units.size() > 0:
             var new_group: LittleGuyGroup = group_manager.create_group(selected_units)
+            print("New group: ", new_group)
             if new_group != null:
                 new_group.move_group_to(target_pos)
             clear_selected_units()
@@ -83,4 +88,4 @@ func screen_to_world(screen_pos: Vector2) -> Vector2:
     return canvas_transform.affine_inverse() * screen_pos
 
 func _ready() -> void:
-    print("Group manager is: ", group_manager)
+    print("Group manager found: ", group_manager)

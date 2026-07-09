@@ -1,7 +1,7 @@
 extends Node
 class_name LittleGuyGroup
 
-@export var formation_spacing: float = 32.0
+@export var formation_spacing: float = 100.0
 
 var units: Array[LittleGuy] = []
 var group_id: int = -1

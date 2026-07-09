@@ -1,15 +1,13 @@
-extends Node
+extends Node2D
 class_name LittleGuyGroupManager
-
-@export var little_guy_group_scene: PackedScene
 
 var next_group_id: int = 1
 var active_groups: Array[LittleGuyGroup] = []
 
-func create_group(units: Array[LittleGuy]) -> LittleGuyGroup:
+func create_group(units: Array) -> LittleGuyGroup:
     if units.is_empty():
         return null
-    var group: LittleGuyGroup = little_guy_group_scene.instantiate()
+    var group := LittleGuyGroup.new()
     add_child(group)
     group.setup(next_group_id, units)
     next_group_id += 1
