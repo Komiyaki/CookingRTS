@@ -1,11 +1,26 @@
-extends Node
+extends Node2D
+class_name Objective
+
+enum ObjectiveKind {
+    INGREDIENT_SOURCE,
+    PAN,
+    PLATE,
+    TRASH,
+    MOVEMENT
+}
+
+@export var objective_kind: ObjectiveKind = ObjectiveKind.INGREDIENT_SOURCE
+@export var item_id: int = 0b011010 # default carrot for testing
+@export var interaction_radius: float = 24.0
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-    pass # Replace with function body.
+func get_target_position() -> Vector2:
+    return global_position
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-    pass
+func get_item_name() -> String:
+    return IDDictionary.get_name(item_id)
+
+
+func get_sprite_name() -> String:
+    return IDDictionary.get_sprite_name(item_id)

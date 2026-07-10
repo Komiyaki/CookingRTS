@@ -122,3 +122,24 @@ const id_dict: Dictionary = {
         "sprite_name": "default",
     },
 }
+
+static func has_id(id: int) -> bool:
+    return id_dict.has(id)
+
+static func get_data(id: int) -> Dictionary:
+    return id_dict.get(id, {})
+
+static func get_name(id: int) -> String:
+    return id_dict.get(id, {}).get("name", "Unknown")
+
+
+static func get_sprite_name(id: int) -> String:
+    return id_dict.get(id, {}).get("sprite_name", "default")
+
+
+static func get_carry_value(id: int) -> int:
+    return id_dict.get(id, {}).get("carry_value", 0)
+
+
+static func get_timer_value(id: int) -> float:
+    return id_dict.get(id, {}).get("timer_value", 0.0)
