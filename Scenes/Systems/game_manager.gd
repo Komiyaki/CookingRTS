@@ -5,6 +5,8 @@ const debug: bool = true
 
 
 @export var carried_object_pool: CarriedObjectPooler
+@export var ui_manager: GameUIManager
+
 @export var gm_round_timer: Timer
 @export var gm_interround_timer: Timer
 
@@ -31,6 +33,7 @@ func _ready() -> void:
     game_state = GameData.GameState.FIRST_LOAD
     _check_dependencies()
 
+    _call_first_setup()
 
     gm_round_timer.wait_time = GameData.ROUND_TIMER_SECONDS
     gm_round_timer.one_shot = true
@@ -45,10 +48,15 @@ func _ready() -> void:
 func _check_dependencies() -> void:
     if carried_object_pool == null:
         push_error("No carried_object_pool set on %s" % name)
+    if ui_manager == null:
+        push_error("No ui_manager set on %s" % name)
     if gm_round_timer == null:
         push_error("No gm_round_timer set on %s" % name)
     if gm_interround_timer == null:
         push_error("No gm_interround_timer set on %s" % name)
+
+func _call_first_setup() -> void:
+    ui_manager.first_setup(self)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

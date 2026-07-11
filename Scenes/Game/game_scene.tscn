@@ -303,8 +303,9 @@ script = ExtResource("3_3iobd")
 object_scene = ExtResource("2_2jp0x")
 metadata/_custom_type_script = "uid://bkqtct8ws50cu"
 
-[node name="GameManager" parent="." unique_id=1000138197 node_paths=PackedStringArray("carried_object_pool") instance=ExtResource("4_8umfg")]
+[node name="GameManager" parent="." unique_id=1000138197 node_paths=PackedStringArray("carried_object_pool", "ui_manager") instance=ExtResource("4_8umfg")]
 carried_object_pool = NodePath("../CarriedObjectPooler")
+ui_manager = NodePath("../GameUI")
 
 [node name="LittleGuys" type="Node2D" parent="." unique_id=62857576]
 
@@ -356,5 +357,4 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("6_m6pt0")
 
-[node name="GameUI" parent="." unique_id=1445027906 node_paths=PackedStringArray("game_manager") instance=ExtResource("10_y71v2")]
-game_manager = NodePath("../GameManager")
+[node name="GameUI" parent="." unique_id=1445027906 instance=ExtResource("10_y71v2")]
