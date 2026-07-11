@@ -84,38 +84,38 @@ const id_dict: Dictionary = {
         "sprite_name": "default",
     },
     # Sauce
-    0b101000: { # 40
+    0b100000: { # 32
         "name": "Soy",
         "carry_value": 3,
         "timer_value": 0,
         "sprite_name": "default",
     },
-    0b101001: { # 41
+    0b100001: { # 33
         "name": "Oyster",
         "carry_value": 3,
         "timer_value": 0,
         "sprite_name": "default",
     },
-    0b101010: { # 42
+    0b100010: { # 34
         "name": "Worcestershire",
         "carry_value": 3,
         "timer_value": 0,
         "sprite_name": "default",
     },
     # Seasoning
-    0b110000: { # 48
+    0b101000: { # 40
         "name": "Salt",
         "carry_value": 3,
         "timer_value": 0,
         "sprite_name": "default",
     },
-    0b110001: { # 49
+    0b101001: { # 41
         "name": "Pepper",
         "carry_value": 3,
         "timer_value": 0,
         "sprite_name": "default",
     },
-    0b110010: { # 50
+    0b101010: { # 42
         "name": "MSG",
         "carry_value": 3,
         "timer_value": 0,
