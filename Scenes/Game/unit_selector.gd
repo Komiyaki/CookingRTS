@@ -9,6 +9,9 @@ var select_box: Rect2 = Rect2()
 const CLICK_THRESHOLD: float = 8.0
 const CLICK_SELECT_SIZE: Vector2 = Vector2(24, 24)
 
+func _ready() -> void:
+    print("Group manager found: ", group_manager)
+
 func _input(e: InputEvent) -> void:
     if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_RIGHT and e.pressed:
         var target_pos: Vector2 = screen_to_world(e.position)
@@ -16,11 +19,16 @@ func _input(e: InputEvent) -> void:
         for unit in get_tree().get_nodes_in_group("selected-units"):
             if unit is LittleGuy:
                 selected_units.append(unit)
-        if selected_units.size() > 0:
-            var new_group: LittleGuyGroup = group_manager.create_group(selected_units)
-            if new_group != null:
-                new_group.move_group_to(target_pos)
-            clear_selected_units()
+        if selected_units.is_empty():
+            return
+        var target_group: LittleGuyGroup = get_shared_group(selected_units)
+        if target_group == null:
+            target_group = group_manager.create_group(selected_units)
+        if target_group == null:
+            return
+        var move_order: LittleGuyOrder = LittleGuyOrder.make_move_order(target_pos)
+        target_group.add_order(move_order)
+        print("Added MOVE order at ", target_pos, " to group ", target_group.group_id)
         return
     if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
         if e.pressed:
@@ -33,7 +41,7 @@ func _input(e: InputEvent) -> void:
             var additive: bool = Input.is_key_pressed(KEY_SHIFT)
             var is_click: bool = drag_start.distance_to(e.position) < CLICK_THRESHOLD
             if is_click:
-                select_box = Rect2(e.position - CLICK_SELECT_SIZE / 2.0,CLICK_SELECT_SIZE)
+                select_box = Rect2(e.position - CLICK_SELECT_SIZE / 2.0, CLICK_SELECT_SIZE)
             else:
                 select_box = make_rect_from_points(drag_start, e.position)
             update_selected_units(additive, is_click)
@@ -81,5 +89,18 @@ func screen_to_world(screen_pos: Vector2) -> Vector2:
     var canvas_transform := get_viewport().get_canvas_transform()
     return canvas_transform.affine_inverse() * screen_pos
 
-func _ready() -> void:
-    print("Group manager found: ", group_manager)
+func get_shared_group(units: Array[LittleGuy]) -> LittleGuyGroup:
+    if units.is_empty():
+        return null
+    var shared_group: LittleGuyGroup = units[0].current_group
+    if shared_group == null:
+        return null
+    for unit in units:
+        if unit.current_group != shared_group:
+            return null
+    if shared_group.units.size() != units.size():
+        return null
+    for group_unit in shared_group.units:
+        if not units.has(group_unit):
+            return null
+    return shared_group
