@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dmq4i8m6t7byd"]
+
+[ext_resource type="Script" uid="uid://bkqtct8ws50cu" path="res://scenes/Systems/Pooler/carried_object_pooler.gd" id="1_e8uki"]
+[ext_resource type="PackedScene" uid="uid://sck6tmm11m34" path="res://scenes/Systems/Pooler/carried_object.tscn" id="2_femqa"]
+
+[node name="CarriedObjectPooler" type="Node" unique_id=728435351]
+script = ExtResource("1_e8uki")
+object_scene = ExtResource("2_femqa")
+metadata/_custom_type_script = "uid://bkqtct8ws50cu"

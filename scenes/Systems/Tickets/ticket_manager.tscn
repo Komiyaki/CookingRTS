@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c3cs21mitd80e"]
+
+[ext_resource type="Script" uid="uid://dkf8k4kmbgqav" path="res://scenes/Systems/Tickets/ticket_manager.gd" id="1_eabfm"]
+
+[node name="TicketManager" type="Node" unique_id=241001017]
+script = ExtResource("1_eabfm")

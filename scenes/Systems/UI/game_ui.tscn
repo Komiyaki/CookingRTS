@@ -2,8 +2,10 @@
 
 [ext_resource type="Script" uid="uid://cy05wye1dldrh" path="res://scenes/Systems/UI/game_ui_manager.gd" id="1_rns2u"]
 [ext_resource type="Script" uid="uid://v42fyl7ityev" path="res://scenes/Systems/UI/debug_ui_manager.gd" id="2_u001w"]
+[ext_resource type="LabelSettings" uid="uid://bqn8w0xr6l1h0" path="res://scenes/Systems/UI/debug_label_settings.tres" id="3_j3aq3"]
+[ext_resource type="Script" uid="uid://cxgf8j8duc82k" path="res://scenes/Systems/UI/timer_ui.gd" id="4_wvl1n"]
 
-[node name="GameUI" type="Control" unique_id=1445027906 node_paths=PackedStringArray("debug_ui_manager")]
+[node name="GameUI" type="Control" unique_id=1445027906 node_paths=PackedStringArray("debug_ui_manager", "timer_ui_manager")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,23 +13,42 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_rns2u")
-debug_ui_manager = NodePath("DebugUI")
+debug_ui_manager = NodePath("MarginContainer/HBoxContainer/DebugUI")
+timer_ui_manager = NodePath("MarginContainer/HBoxContainer/TimerUI")
 
-[node name="DebugUI" type="AspectRatioContainer" parent="." unique_id=855082386 node_paths=PackedStringArray("round_label", "state_label")]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=91373726]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1392973880]
+layout_mode = 2
+
+[node name="DebugUI" type="AspectRatioContainer" parent="MarginContainer/HBoxContainer" unique_id=855082386 node_paths=PackedStringArray("round_label", "state_label")]
+layout_mode = 2
 script = ExtResource("2_u001w")
 round_label = NodePath("VBoxContainer/RoundLabel")
 state_label = NodePath("VBoxContainer/GaneStateLabel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="DebugUI" unique_id=513071584]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/DebugUI" unique_id=513071584]
 layout_mode = 2
 
-[node name="GaneStateLabel" type="Label" parent="DebugUI/VBoxContainer" unique_id=2012519911]
+[node name="GaneStateLabel" type="Label" parent="MarginContainer/HBoxContainer/DebugUI/VBoxContainer" unique_id=2012519911]
 layout_mode = 2
 text = "STATE"
+label_settings = ExtResource("3_j3aq3")
 
-[node name="RoundLabel" type="Label" parent="DebugUI/VBoxContainer" unique_id=175538697]
+[node name="RoundLabel" type="Label" parent="MarginContainer/HBoxContainer/DebugUI/VBoxContainer" unique_id=175538697]
 layout_mode = 2
 text = "ROUND"
+label_settings = ExtResource("3_j3aq3")
+
+[node name="TimerUI" type="AspectRatioContainer" parent="MarginContainer/HBoxContainer" unique_id=449169147 node_paths=PackedStringArray("timer_label")]
+layout_mode = 2
+script = ExtResource("4_wvl1n")
+timer_label = NodePath("TimerLabel")
+
+[node name="TimerLabel" type="Label" parent="MarginContainer/HBoxContainer/TimerUI" unique_id=433242984]
+layout_mode = 2
+text = "TIMER"
+label_settings = ExtResource("3_j3aq3")
