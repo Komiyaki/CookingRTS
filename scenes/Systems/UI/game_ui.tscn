@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://v42fyl7ityev" path="res://scenes/Systems/UI/debug_ui_manager.gd" id="2_u001w"]
 [ext_resource type="LabelSettings" uid="uid://bqn8w0xr6l1h0" path="res://scenes/Systems/UI/debug_label_settings.tres" id="3_j3aq3"]
 [ext_resource type="Script" uid="uid://cxgf8j8duc82k" path="res://scenes/Systems/UI/timer_ui.gd" id="4_wvl1n"]
+[ext_resource type="Script" uid="uid://caqnfdpjinpod" path="res://scenes/Systems/UI/ticket_ui_manager.gd" id="5_xg5ic"]
 
 [node name="GameUI" type="Control" unique_id=1445027906 node_paths=PackedStringArray("debug_ui_manager", "timer_ui_manager")]
 layout_mode = 3
@@ -52,3 +53,7 @@ timer_label = NodePath("TimerLabel")
 layout_mode = 2
 text = "TIMER"
 label_settings = ExtResource("3_j3aq3")
+
+[node name="TicketUIManager" type="AspectRatioContainer" parent="MarginContainer/HBoxContainer" unique_id=121193264]
+layout_mode = 2
+script = ExtResource("5_xg5ic")

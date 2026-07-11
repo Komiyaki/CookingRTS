@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://ckyf2viuvjyq8"]
+
+[ext_resource type="Script" uid="uid://b0mtatp566qjc" path="res://scenes/Systems/UI/ticket_ui_object.gd" id="1_as7w1"]
+[ext_resource type="Texture2D" uid="uid://34bswe7d45e6" path="res://icon.svg" id="2_lgfo5"]
+
+[node name="TicketUiObject" type="Control" unique_id=628041329]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_as7w1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1864025874]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HBoxContainer" unique_id=1013520383]
+layout_mode = 2
+fill_mode = 5
+texture_under = ExtResource("2_lgfo5")
+texture_progress = ExtResource("2_lgfo5")
+tint_under = Color(0, 1, 0, 1)
+
+[node name="TicketName" type="Label" parent="HBoxContainer" unique_id=530878912]
+layout_mode = 2
+text = "Name"
