@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://ddnkl25b1k5s7"]
+
+[ext_resource type="Script" uid="uid://bqof7pucntvr5" path="res://scenes/Systems/Tickets/ticket.gd" id="1_7fjto"]
+
+[node name="Ticket" type="Container" unique_id=2035386297]
+script = ExtResource("1_7fjto")
+
+[node name="TimerLabel" type="Label" parent="." unique_id=631701831]
+layout_mode = 2
+
+[node name="TicketName" type="Label" parent="." unique_id=1690806100]
+layout_mode = 2
