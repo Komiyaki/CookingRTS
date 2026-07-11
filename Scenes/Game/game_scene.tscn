@@ -1,15 +1,15 @@
 [gd_scene format=4 uid="uid://ix3cebvvls0j"]
 
 [ext_resource type="Texture2D" uid="uid://dvcoxm2vvvhps" path="res://Asset/Screenshot 2026-07-06 151729.png" id="1_ctr27"]
-[ext_resource type="PackedScene" uid="uid://sck6tmm11m34" path="res://scenes/Systems/Pooler/carried_object.tscn" id="2_2jp0x"]
+[ext_resource type="PackedScene" uid="uid://sck6tmm11m34" path="res://Scenes/Systems/Pooler/carried_object.tscn" id="2_2jp0x"]
 [ext_resource type="Texture2D" uid="uid://34bswe7d45e6" path="res://icon.svg" id="2_ihfs7"]
-[ext_resource type="Script" uid="uid://bkqtct8ws50cu" path="res://scenes/Systems/Pooler/carried_object_pooler.gd" id="3_3iobd"]
-[ext_resource type="PackedScene" uid="uid://c0lvexnjh2auj" path="res://scenes/Systems/game_manager.tscn" id="4_8umfg"]
-[ext_resource type="Script" uid="uid://b7d86811y3gy" path="res://scenes/Systems/little_guy.gd" id="5_wsift"]
-[ext_resource type="Script" uid="uid://dh3qds0vllotc" path="res://scenes/Game/unit_selector.gd" id="6_m6pt0"]
-[ext_resource type="Script" uid="uid://2hammvmw41m1" path="res://scenes/Systems/little_guy_group_manager.gd" id="6_wsift"]
-[ext_resource type="PackedScene" uid="uid://b4owtpdvtfo7i" path="res://scenes/LittleGuyGroup.tscn" id="7_wsift"]
-[ext_resource type="PackedScene" uid="uid://dce6j7tm6pgxh" path="res://scenes/Systems/UI/game_ui.tscn" id="10_y71v2"]
+[ext_resource type="Script" uid="uid://bkqtct8ws50cu" path="res://Scenes/Systems/Pooler/carried_object_pooler.gd" id="3_3iobd"]
+[ext_resource type="PackedScene" uid="uid://c0lvexnjh2auj" path="res://Scenes/Systems/game_manager.tscn" id="4_8umfg"]
+[ext_resource type="Script" uid="uid://b7d86811y3gy" path="res://Scenes/Systems/little_guy.gd" id="5_wsift"]
+[ext_resource type="Script" uid="uid://dh3qds0vllotc" path="res://Scenes/Game/unit_selector.gd" id="6_m6pt0"]
+[ext_resource type="Script" uid="uid://2hammvmw41m1" path="res://Scenes/Systems/little_guy_group_manager.gd" id="6_wsift"]
+[ext_resource type="PackedScene" uid="uid://b4owtpdvtfo7i" path="res://Scenes/LittleGuyGroup.tscn" id="7_wsift"]
+[ext_resource type="PackedScene" uid="uid://dce6j7tm6pgxh" path="res://Scenes/Systems/UI/game_ui.tscn" id="10_y71v2"]
 
 [sub_resource type="GDScript" id="GDScript_c53t7"]
 

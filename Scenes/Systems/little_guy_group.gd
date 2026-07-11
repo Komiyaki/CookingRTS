@@ -99,3 +99,8 @@ func disband() -> void:
             unit.current_group = null
     units.clear()
     queue_free()
+
+func replace_orders(order: LittleGuyOrder) -> void:
+    order_queue.clear()
+    current_order = null
+    add_order(order)

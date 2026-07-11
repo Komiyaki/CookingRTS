@@ -7,7 +7,7 @@ var drag_start: Vector2 = Vector2.ZERO
 var select_box: Rect2 = Rect2()
 
 const CLICK_THRESHOLD: float = 8.0
-const CLICK_SELECT_SIZE: Vector2 = Vector2(24, 24)
+const CLICK_SELECT_SIZE: Vector2 = Vector2(36, 36)
 
 func _ready() -> void:
     print("Group manager found: ", group_manager)
@@ -26,9 +26,16 @@ func _input(e: InputEvent) -> void:
             target_group = group_manager.create_group(selected_units)
         if target_group == null:
             return
-        var move_order: LittleGuyOrder = LittleGuyOrder.make_move_order(target_pos)
-        target_group.add_order(move_order)
-        print("Added MOVE order at ", target_pos, " to group ", target_group.group_id)
+        var move_order := LittleGuyOrder.new()
+        move_order.action_type = LittleGuyOrder.ActionType.MOVE
+        move_order.target_position = target_pos
+        var queue_order: bool = Input.is_key_pressed(KEY_SHIFT)
+        if queue_order:
+            target_group.add_order(move_order)
+            print("Queued MOVE order: ", target_pos)
+        else:
+            target_group.replace_orders(move_order)
+            print("Replaced orders with MOVE order: ", target_pos)
         return
     if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
         if e.pressed:
