@@ -6,6 +6,7 @@ const debug: bool = true
 
 @export var carried_object_pool: CarriedObjectPooler
 @export var ui_manager: GameUIManager
+@export var ticket_manager: TicketManager
 
 @export var gm_round_timer: Timer
 @export var gm_interround_timer: Timer

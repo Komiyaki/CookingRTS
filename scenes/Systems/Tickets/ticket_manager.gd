@@ -1,9 +1,9 @@
 extends Node
 class_name TicketManager
 
-@export var tickets: Array[Ticket] = Array()
+@export var tickets: Array[Ticket]
 
-@export var plate_zone:
+# @export var plate_zone:
 # Object to detect completed dishes, pick them up and grade
 # Reference to ui manager to handle ticket display
 

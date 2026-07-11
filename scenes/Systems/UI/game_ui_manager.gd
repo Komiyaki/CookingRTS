@@ -2,6 +2,7 @@ extends Control
 class_name GameUIManager
 
 @export var debug_ui_manager: DebugUIManager
+@export var timer_ui_manager: TimerUIManager
 @export var ticket_ui_manager: TicketUIManager
 
 # Called when the node enters the scene tree for the first time.
@@ -10,6 +11,7 @@ func _ready() -> void:
 
 func first_setup(game_manager: GameManager) -> void:
     debug_ui_manager.connect_labels(game_manager)
+    timer_ui_manager.first_setup(game_manager)
 
 func _check_dependencies() -> void:
     if debug_ui_manager == null:
