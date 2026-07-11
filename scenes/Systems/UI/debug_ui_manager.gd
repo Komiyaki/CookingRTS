@@ -11,7 +11,6 @@ func connect_labels(game_manager: GameManager) -> void:
     game_manager.game_state_event.connect(_update_state_label)
 
 func _update_round_label(round_num: int) -> void:
-
     round_label.text = str(round_num)
 
 func _update_state_label(_old_state: GameData.GameState, new_state: GameData.GameState) -> void:

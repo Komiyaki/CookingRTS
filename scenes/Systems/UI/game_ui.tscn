@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dce6j7tm6pgxh"]
 
-[ext_resource type="Script" uid="uid://cy05wye1dldrh" path="res://scenes/game_ui_manager.gd" id="1_rns2u"]
-[ext_resource type="Script" uid="uid://v42fyl7ityev" path="res://scenes/debug_ui_manager.gd" id="2_u001w"]
+[ext_resource type="Script" uid="uid://cy05wye1dldrh" path="res://scenes/Systems/UI/game_ui_manager.gd" id="1_rns2u"]
+[ext_resource type="Script" uid="uid://v42fyl7ityev" path="res://scenes/Systems/UI/debug_ui_manager.gd" id="2_u001w"]
 
 [node name="GameUI" type="Control" unique_id=1445027906 node_paths=PackedStringArray("debug_ui_manager")]
 layout_mode = 3
