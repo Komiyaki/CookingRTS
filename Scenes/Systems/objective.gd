@@ -19,8 +19,8 @@ func get_target_position() -> Vector2:
 
 
 func get_item_name() -> String:
-    return IDDictionary.get_name(item_id)
+    return CarriedObjectDictionary.get_name(item_id)
 
 
 func get_sprite_name() -> String:
-    return IDDictionary.get_sprite_name(item_id)
+    return CarriedObjectDictionary.get_sprite_name(item_id)

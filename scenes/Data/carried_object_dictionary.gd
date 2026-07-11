@@ -1,4 +1,4 @@
-class_name IDDictionary
+class_name CarriedObjectDictionary
 
 const id_dict: Dictionary = {
     # Plate
