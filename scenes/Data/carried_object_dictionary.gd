@@ -78,7 +78,7 @@ const id_dict: Dictionary = {
         "sprite_name": "default",
     },
     0b011101: { # 29
-        "name": "Pepper",
+        "name": "Bell Pepper",
         "carry_value": 3,
         "timer_value": 0,
         "sprite_name": "default",
