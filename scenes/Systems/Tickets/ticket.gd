@@ -1,4 +1,4 @@
-extends Container
+extends Node
 class_name Ticket
 
 enum TicketRequest {
@@ -8,7 +8,15 @@ enum TicketRequest {
     ALERGEN,
 }
 
-@export var time_limit: int = 60
+signal ticket_expired(ticket: Ticket)
+
+@export var id: int = 0
+@export var time_limit: float = 60
 @export var dish_id: int = 0
 @export var dish_request: Dictionary = Dictionary()
 # dish_request should follow { ingredient_id: TicketRequest } format, logic handled in TicketManager
+
+var timer: Timer
+
+func _timout_ticket() -> void:
+    ticket_expired.emit(self)

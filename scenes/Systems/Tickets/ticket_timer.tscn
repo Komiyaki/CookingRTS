@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://cwbyv42ohslja"]
+
+[node name="TicketTimer" type="Timer" unique_id=1902543742]
+wait_time = 60.0
+one_shot = true

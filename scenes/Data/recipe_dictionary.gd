@@ -1,8 +1,10 @@
 class_name RecipeDictionary
 
+const RECIPE_NAME: String = "recipe_name"
+
 const recipe_dict: Dictionary = {
     1: {
-        
+
         "recipe_name": "Basic Fried Rice",
         "ingredients": {
             0b010011: 2, # Rice

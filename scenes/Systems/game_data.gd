@@ -4,6 +4,8 @@ class_name GameData
 const ROUND_TIMER_SECONDS: int = 120
 const INTERROUND_TIMER_SECONDS: int = 30
 
+const MAX_CONCURRENT_TICKETS: int = 10
+
 enum GameState {
 FIRST_LOAD,
 COUNTDOWN,

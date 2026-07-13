@@ -6,9 +6,11 @@ const debug: bool = true
 
 @export var carried_object_pool: CarriedObjectPooler
 @export var ui_manager: GameUIManager
+@export var ticket_manager: TicketManager
 
 @export var gm_round_timer: Timer
 @export var gm_interround_timer: Timer
+@export var gm_ticket_spawn_timer: Timer
 
 signal game_state_event(previous_state: GameData.GameState, new_state: GameData.GameState)
 @export var game_state: GameData.GameState = GameData.GameState.FIRST_LOAD:
@@ -43,6 +45,8 @@ func _ready() -> void:
     gm_interround_timer.one_shot = true
     gm_interround_timer.timeout.connect(_interround_timer_end)
 
+    gm_ticket_spawn_timer.timeout.connect(_spawn_ticket_timer_end)
+
     # carried_object_pool.spawn_carried_object(Vector2.ONE * 200, 0)
 
 func _check_dependencies() -> void:
@@ -57,6 +61,7 @@ func _check_dependencies() -> void:
 
 func _call_first_setup() -> void:
     ui_manager.first_setup(self)
+    ticket_manager.first_setup(ui_manager)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -73,6 +78,7 @@ func _process(delta: float) -> void:
             pass
 
         GameData.GameState.INTERROUND:
+            gm_ticket_spawn_timer.stop()
             # allow shopping for new guys??? idk
             pass
 
@@ -82,6 +88,8 @@ func _process(delta: float) -> void:
             game_state = GameData.GameState.SPAWNING
 
             gm_round_timer.start()
+            gm_ticket_spawn_timer.start()
+            ticket_manager.spawn_ticket()
             pass
 
         GameData.GameState.SPAWNING:
@@ -106,3 +114,6 @@ func _round_timer_end() -> void:
 
 func _interround_timer_end() -> void:
     game_state = GameData.GameState.ROUND_SWITCH
+
+func _spawn_ticket_timer_end() -> void:
+    ticket_manager.spawn_ticket()
