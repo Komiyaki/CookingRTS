@@ -6,7 +6,6 @@ const debug: bool = true
 
 @export var carried_object_pool: CarriedObjectPooler
 @export var ui_manager: GameUIManager
-@export var ticket_manager: TicketManager
 
 @export var gm_round_timer: Timer
 @export var gm_interround_timer: Timer
@@ -44,7 +43,7 @@ func _ready() -> void:
     gm_interround_timer.one_shot = true
     gm_interround_timer.timeout.connect(_interround_timer_end)
 
-    carried_object_pool.spawn_carried_object(Vector2.ONE * 200, 0)
+    # carried_object_pool.spawn_carried_object(Vector2.ONE * 200, 0)
 
 func _check_dependencies() -> void:
     if carried_object_pool == null:
