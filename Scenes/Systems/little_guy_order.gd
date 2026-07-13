@@ -21,5 +21,6 @@ static func make_move_order(pos: Vector2) -> LittleGuyOrder:
 
 func get_target_position() -> Vector2:
     if target_objective != null and is_instance_valid(target_objective):
-        return target_objective.global_position
+        if target_objective.has_method("get_target_position"):
+            return target_objective.get_target_position()
     return target_position
