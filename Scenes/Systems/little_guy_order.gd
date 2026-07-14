@@ -8,7 +8,7 @@ enum ActionType {
     INTERACT
 }
 
-var action_type: ActionType
+var action_type: ActionType = ActionType.MOVE
 var target_position: Vector2 = Vector2.ZERO
 var target_objective: Node2D = null
 var item_id: int = -1

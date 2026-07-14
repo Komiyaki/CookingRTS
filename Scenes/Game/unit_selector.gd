@@ -27,31 +27,32 @@ func _input(e: InputEvent) -> void:
             target_group = group_manager.create_group(selected_units)
         if target_group == null:
             return
-        var clicked_objective: Objective = get_objective_at(clicked_pos)
-        var move_order := LittleGuyOrder.new()
-        move_order.action_type = LittleGuyOrder.ActionType.MOVE
-        if clicked_objective != null:
-            move_order.target_objective = clicked_objective
-            move_order.target_position = clicked_objective.get_target_position()
-            move_order.item_id = clicked_objective.item_id
-            print("Clicked objective: ", clicked_objective.name)
-            print("Objective position: ", clicked_objective.global_position)
-            print("Marker position: ", clicked_objective.get_target_position())
-            print("Objective clicked: ", clicked_objective.name)
-            print("Moving to marker: ", clicked_objective.get_target_position())
-            print("Creating order")
-            print("Target objective: ", move_order.target_objective)
-            print("Item ID: ", move_order.item_id)
-            print("Item name: ", CarriedObjectDictionary.get_item_name(move_order.item_id))
+        var clicked_target: Node2D = get_interactable_at(clicked_pos)
+        var new_order := LittleGuyOrder.new()
+        if clicked_target != null:
+            new_order.target_objective = clicked_target
+            new_order.target_position = clicked_target.get_target_position()
+            new_order.item_id = clicked_target.get_item_id()
+            if clicked_target is CarriedObject:
+                new_order.action_type = LittleGuyOrder.ActionType.PICKUP
+            elif clicked_target is Objective and clicked_target.objective_kind == Objective.ObjectiveKind.INGREDIENT_SOURCE:
+                new_order.action_type = LittleGuyOrder.ActionType.PICKUP
+            else:
+                new_order.action_type = LittleGuyOrder.ActionType.MOVE
         else:
-            move_order.target_position = clicked_pos
-            print("No objective detected")
-            print("Ground clicked: ", clicked_pos)
+            new_order.action_type = LittleGuyOrder.ActionType.MOVE
+            new_order.target_position = clicked_pos
+        print("Clicked position: ", clicked_pos)
+        print("Clicked target: ", clicked_target)
+        print("Order type: ", LittleGuyOrder.ActionType.find_key(new_order.action_type))
+        print("Order objective: ", new_order.target_objective)
+        print("Order position: ", new_order.get_target_position())
+        print("Order item ID: ", new_order.item_id)
         var queue_order: bool = Input.is_key_pressed(KEY_SHIFT)
         if queue_order:
-            target_group.add_order(move_order)
+            target_group.add_order(new_order)
         else:
-            target_group.replace_orders(move_order)
+            target_group.replace_orders(new_order)
         return
     if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
         if e.pressed:
@@ -128,19 +129,19 @@ func get_shared_group(units: Array[LittleGuy]) -> LittleGuyGroup:
             return null
     return shared_group
 
-func get_objective_at(world_pos: Vector2) -> Objective:
+func get_interactable_at(world_pos: Vector2) -> Node2D:
     var query := PhysicsPointQueryParameters2D.new()
     query.position = world_pos
     query.collision_mask = objective_collision_mask
     query.collide_with_areas = true
     query.collide_with_bodies = false
     var hits := get_viewport().world_2d.direct_space_state.intersect_point(query, 16)
-    print("Objective query position: ", world_pos)
-    print("Objective query mask: ", objective_collision_mask)
-    print("Objective query hits: ", hits.size())
     for hit in hits:
-        var collider = hit["collider"]
-        print("Detected collider: ", collider, " script: ", collider.get_script())
+        var collider: Node = hit["collider"]
         if collider is Objective:
             return collider
+        if collider is Area2D:
+            var parent := collider.get_parent()
+            if parent is CarriedObject and parent.can_interact():
+                return parent
     return null

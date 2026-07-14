@@ -1,8 +1,8 @@
 extends Node2D
 class_name LittleGuyGroup
 
-@export var formation_spacing: float = 25.0
-@export var carried_object_offset: Vector2 = Vector2(0, -50)
+@export var formation_radius: float = 50.0
+@export var carried_object_offset: Vector2 = Vector2.ZERO
 
 var carried_object_pooler: CarriedObjectPooler
 var carried_object: CarriedObject = null
@@ -11,13 +11,15 @@ var group_id: int = -1
 var target_pos: Vector2
 var order_queue: Array[LittleGuyOrder] = []
 var current_order: LittleGuyOrder = null
+var objectives_container: Node2D
 
 func _ready() -> void:
     set_process(false)
 
-func setup(_group_id: int, new_units: Array[LittleGuy], _carried_object_pooler: CarriedObjectPooler) -> void:
+func setup(_group_id: int, new_units: Array[LittleGuy], _carried_object_pooler: CarriedObjectPooler, _objectives_container: Node2D) -> void:
     group_id = _group_id
     carried_object_pooler = _carried_object_pooler
+    objectives_container = _objectives_container
     for unit in new_units:
         add_unit(unit)
     update_group_position()
@@ -50,14 +52,12 @@ func start_next_order() -> void:
     if order_queue.is_empty():
         current_order = null
         set_process(false)
-        print("Group ", group_id, " finished its order queue.")
         return
     current_order = order_queue.pop_front()
     match current_order.action_type:
-        LittleGuyOrder.ActionType.MOVE:
+        LittleGuyOrder.ActionType.MOVE, LittleGuyOrder.ActionType.PICKUP:
             move_group_to(current_order.get_target_position())
         _:
-            print("This order type is not implemented yet.")
             current_order = null
             start_next_order()
             return
@@ -67,17 +67,14 @@ func _process(_delta: float) -> void:
     update_group_position()
     if current_order == null:
         return
-    if current_order.action_type == LittleGuyOrder.ActionType.MOVE:
+    if current_order.action_type == LittleGuyOrder.ActionType.MOVE or current_order.action_type == LittleGuyOrder.ActionType.PICKUP:
         if all_units_reached_target():
             complete_current_order()
 
 func complete_current_order() -> void:
-    print("Group completed current order")
-    print("Current objective: ", current_order.target_objective)
-    print("Current item ID: ", current_order.item_id)
-    if current_order.target_objective != null:
-        print("Testing carried item attachment")
-        attach_carried_item(current_order.item_id)
+    if current_order.action_type == LittleGuyOrder.ActionType.PICKUP:
+        execute_pickup_order(current_order)
+    print("Group ", group_id, " completed order at ", current_order.get_target_position())
     current_order = null
     start_next_order()
 
@@ -94,18 +91,18 @@ func move_group_to(pos: Vector2) -> void:
     if units.is_empty():
         return
     var count: int = units.size()
-    var columns: int = ceili(sqrt(float(count)))
-    var rows: int = ceili(float(count) / float(columns))
-    var grid_width: float = float(columns - 1) * formation_spacing
-    var grid_height: float = float(rows - 1) * formation_spacing
+    if count == 1:
+        units[0].move_to(pos)
+        return
+    var angle_step: float = TAU / float(count)
+    var starting_angle: float = -PI / 2.0
     for i in range(count):
-        var unit: LittleGuy = units[i]
-        var col: int = i % columns
-        var row: int = floori(float(i) / float(columns))
-        var offset := Vector2(float(col) * formation_spacing - grid_width / 2.0,float(row) * formation_spacing - grid_height / 2.0)
-        unit.move_to(pos + offset)
+        var angle: float = starting_angle + angle_step * float(i)
+        var offset := Vector2(cos(angle), sin(angle)) * formation_radius
+        units[i].move_to(pos + offset)
 
 func disband() -> void:
+    drop_current_carried_object()
     order_queue.clear()
     current_order = null
     for unit in units:
@@ -130,32 +127,51 @@ func update_group_position() -> void:
         global_position = combined_position / float(valid_unit_count)
 
 func attach_carried_item(item_id: int) -> void:
-    print("attach_carried_item called with ID: ", item_id)
     if item_id < 0:
-        print("FAILED: invalid item ID")
         return
     if carried_object_pooler == null:
-        print("FAILED: carried_object_pooler is null")
-        return
-    print("Pooler found: ", carried_object_pooler)
-    print("Sprite dictionary has ID: ", carried_object_pooler.sprite_dict.has(item_id))
-    print("Texture for ID: ", carried_object_pooler.sprite_dict.get(item_id))
-    if carried_object != null and is_instance_valid(carried_object):
-        print("Updating existing carried object")
-        carried_object.id = item_id
-        carried_object.sprite.texture = carried_object_pooler.sprite_dict.get(item_id)
+        push_error("LittleGuyGroup has no CarriedObjectPooler.")
         return
     update_group_position()
-    var spawn_position := global_position + carried_object_offset
-    print("Spawning carried object at: ", spawn_position)
-    carried_object = carried_object_pooler.spawn_carried_object(spawn_position, item_id)
-    print("Spawn result: ", carried_object)
+    carried_object = carried_object_pooler.spawn_carried_object(global_position, item_id)
     if carried_object == null:
-        print("FAILED: pooler returned null")
+        push_error("CarriedObjectPooler failed to spawn an object.")
         return
-    print("Carried object sprite: ", carried_object.sprite)
-    print("Carried object texture: ", carried_object.sprite.texture)
-    carried_object.reparent(self, true)
-    carried_object.position = carried_object_offset
-    print("New parent: ", carried_object.get_parent())
-    print("Local carried-object position: ", carried_object.position)
+    carried_object.set_carried(self)
+
+func _draw() -> void:
+    draw_circle(Vector2.ZERO, 4.0, Color.RED)
+
+func execute_pickup_order(order: LittleGuyOrder) -> void:
+    var target: Node2D = order.target_objective
+    if target == null or not is_instance_valid(target):
+        return
+    if not target.has_method("can_interact") or not target.can_interact():
+        print("Pickup target is no longer available.")
+        return
+    if target is CarriedObject:
+        pickup_dropped_object(target)
+    elif target is Objective:
+        pickup_from_objective(target)
+
+func pickup_from_objective(objective: Objective) -> void:
+    drop_current_carried_object()
+    attach_carried_item(objective.item_id)
+    print("Group ", group_id, " picked up ", objective.get_item_name())
+
+func pickup_dropped_object(object: CarriedObject) -> void:
+    if not object.can_interact():
+        return
+    drop_current_carried_object()
+    carried_object = object
+    carried_object.set_carried(self)
+    print("Group ", group_id, " picked up dropped ", CarriedObjectDictionary.get_item_name(object.id))
+
+func drop_current_carried_object() -> void:
+    if carried_object == null or not is_instance_valid(carried_object):
+        return
+    update_group_position()
+    var object_to_drop: CarriedObject = carried_object
+    carried_object = null
+    object_to_drop.drop_to_world(objectives_container, global_position)
+    print("Group ", group_id, " dropped ", CarriedObjectDictionary.get_item_name(object_to_drop.id))

@@ -29,3 +29,9 @@ func get_item_name() -> String:
 
 func get_sprite_name() -> String:
     return CarriedObjectDictionary.get_sprite_name(item_id)
+
+func get_item_id() -> int:
+    return item_id
+
+func can_interact() -> bool:
+    return true
