@@ -30,4 +30,5 @@ func add_ticket_ui(ticket: Ticket) -> void:
     pass
 
 func remove_ticket_ui(ticket_ui_obj: TicketUIObject) -> void:
-    pass
+    ticket_uis.erase(ticket_ui_obj.id)
+    ticket_ui_obj.queue_free()
