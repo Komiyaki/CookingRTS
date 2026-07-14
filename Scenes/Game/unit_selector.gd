@@ -39,6 +39,10 @@ func _input(e: InputEvent) -> void:
             print("Marker position: ", clicked_objective.get_target_position())
             print("Objective clicked: ", clicked_objective.name)
             print("Moving to marker: ", clicked_objective.get_target_position())
+            print("Creating order")
+            print("Target objective: ", move_order.target_objective)
+            print("Item ID: ", move_order.item_id)
+            print("Item name: ", CarriedObjectDictionary.get_item_name(move_order.item_id))
         else:
             move_order.target_position = clicked_pos
             print("No objective detected")

@@ -10,16 +10,22 @@ enum ObjectiveKind {
 }
 
 @export var objective_kind: ObjectiveKind = ObjectiveKind.INGREDIENT_SOURCE
-@export var item_id: int = 0b011010
+@export var item_id: int = -1
 @export var interaction_radius: float = 24.0
 
 @onready var interaction_point: Marker2D = $Marker2D
+
+func _ready() -> void:
+    if item_id == -1:
+        push_warning(name + " has no item ID assigned.")
+    elif not CarriedObjectDictionary.has_id(item_id):
+        push_warning(name + " has an invalid item ID: " + str(item_id))
 
 func get_target_position() -> Vector2:
     return interaction_point.global_position
 
 func get_item_name() -> String:
-    return CarriedObjectDictionary.get_name(item_id)
+    return CarriedObjectDictionary.get_item_name(item_id)
 
 func get_sprite_name() -> String:
     return CarriedObjectDictionary.get_sprite_name(item_id)

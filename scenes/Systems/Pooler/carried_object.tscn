@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://sck6tmm11m34"]
 
-[ext_resource type="Script" uid="uid://x8wd3cdbxkhp" path="res://scenes/Systems/Pooler/carried_object.gd" id="1_jxp2t"]
+[ext_resource type="Script" uid="uid://x8wd3cdbxkhp" path="res://Scenes/Systems/Pooler/carried_object.gd" id="1_jxp2t"]
 
-[node name="CarriedObject" type="Sprite2D" unique_id=2024251096 node_paths=PackedStringArray("sprite")]
+[node name="CarriedObject" type="Node2D" unique_id=267183025]
 script = ExtResource("1_jxp2t")
-sprite = NodePath(".")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2068953719]

@@ -13,113 +13,113 @@ const id_dict: Dictionary = {
         "name": "Rice",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Rice",
     },
     0b001001: { # 9
         "name": "Noodle",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Noodle",
     },
     # Protein
     0b010000: { # 16
         "name": "Chicken",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Chicken",
     },
     0b010001: { # 17
         "name": "Beef",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Beef Cube",
     },
     0b010010: { # 18
         "name": "Pork",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Pork Cube",
     },
     0b010011: { # 19
         "name": "Shrimp",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Shrimp",
     },
     # Vegetable
     0b011000: { # 24
         "name": "Cabbage",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Cabbage",
     },
     0b011001: { # 25
         "name": "Chives",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Chive",
     },
     0b011010: { # 26
         "name": "Carrot",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Carrot",
     },
     0b011011: { # 27
         "name": "Bok Choy",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Bok Choy",
     },
     0b011100: { # 28
         "name": "Bean Sprout",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Bean Sprout",
     },
     0b011101: { # 29
         "name": "Bell Pepper",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Bell Pepper",
     },
     # Sauce
     0b100000: { # 32
         "name": "Soy",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Soy",
     },
     0b100001: { # 33
         "name": "Oyster",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Oyster",
     },
     0b100010: { # 34
         "name": "Worcestershire",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Worcestershire",
     },
     # Seasoning
     0b101000: { # 40
         "name": "Salt",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Salt",
     },
     0b101001: { # 41
         "name": "Pepper",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "Pepper",
     },
     0b101010: { # 42
         "name": "MSG",
         "carry_value": 3,
         "timer_value": 0,
-        "sprite_name": "default",
+        "sprite_name": "MSG",
     },
 }
 
@@ -129,7 +129,7 @@ static func has_id(id: int) -> bool:
 static func get_data(id: int) -> Dictionary:
     return id_dict.get(id, {})
 
-static func get_name(id: int) -> String:
+static func get_item_name(id: int) -> String:
     return id_dict.get(id, {}).get("name", "Unknown")
 
 

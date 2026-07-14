@@ -384,7 +384,6 @@ tile_set = SubResource("TileSet_ihfs7")
 
 [node name="TicketManager" parent="." unique_id=241001017 instance=ExtResource("3_tw7da")]
 
-[node name="GameManager" parent="." unique_id=1000138197 node_paths=PackedStringArray("carried_object_pool", "ui_manager", "ticket_manager") instance=ExtResource("4_8umfg")]
 carried_object_pool = NodePath("../CarriedObjectPooler")
 ui_manager = NodePath("../GameUI")
 ticket_manager = NodePath("../TicketManager")
