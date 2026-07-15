@@ -7,6 +7,7 @@ const debug: bool = true
 @export var carried_object_pool: CarriedObjectPooler
 @export var ui_manager: GameUIManager
 @export var ticket_manager: TicketManager
+@export var pan: PanObjective
 
 @export var gm_round_timer: Timer
 @export var gm_interround_timer: Timer
@@ -54,14 +55,17 @@ func _check_dependencies() -> void:
         push_error("No carried_object_pool set on %s" % name)
     if ui_manager == null:
         push_error("No ui_manager set on %s" % name)
+    if pan == null:
+        push_error("No pan set on %s" % name)
     if gm_round_timer == null:
         push_error("No gm_round_timer set on %s" % name)
     if gm_interround_timer == null:
         push_error("No gm_interround_timer set on %s" % name)
 
+
 func _call_first_setup() -> void:
     ui_manager.first_setup(self)
-    ticket_manager.first_setup(ui_manager)
+    ticket_manager.first_setup(ui_manager, pan.cooking_manager)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

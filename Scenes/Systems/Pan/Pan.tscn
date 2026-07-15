@@ -1,16 +1,17 @@
 [gd_scene format=3 uid="uid://brio7g5u1317s"]
 
-[ext_resource type="Script" uid="uid://ch54kw5q4woy5" path="res://Scenes/Systems/Pan/pan_objective.gd" id="1_nlgm5"]
+[ext_resource type="Script" uid="uid://ch54kw5q4woy5" path="res://scenes/Systems/Pan/pan_objective.gd" id="1_nlgm5"]
 [ext_resource type="Texture2D" uid="uid://74mevo23nxb7" path="res://Asset/Objective Sprites/Pan.svg" id="2_7kele"]
 [ext_resource type="Texture2D" uid="uid://1blfogns3yqn" path="res://Asset/Sprites/clock.svg" id="2_ubr5s"]
-[ext_resource type="Script" uid="uid://dcrbr2m53xqr2" path="res://Scenes/Systems/cooking_manager.gd" id="3_ubr5s"]
+[ext_resource type="Script" uid="uid://dcrbr2m53xqr2" path="res://scenes/Systems/cooking_manager.gd" id="3_ubr5s"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jmabj"]
 
-[node name="Pan" type="Area2D" unique_id=2040683576 node_paths=PackedStringArray("cook_timer", "timer_indicator")]
+[node name="Pan" type="Area2D" unique_id=2040683576 node_paths=PackedStringArray("cooking_manager", "cook_timer", "timer_indicator")]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_nlgm5")
+cooking_manager = NodePath("Cooking")
 cook_timer = NodePath("Cooking/CookTimer")
 timer_indicator = NodePath("TextureProgressBar")
 objective_kind = 1

@@ -4,8 +4,6 @@ class_name TicketManager
 
 @export var ticket_ui_manager: TicketUIManager
 
-@export var plate_check_timer: Timer
-
 @export var tickets: Dictionary # Tickets are stored as (ticketid, Ticket)
 @export var ticket_count: int = 0
 @export var inactive_timers: Array[Timer]
@@ -24,14 +22,6 @@ const DISH_DICTIONARY_LEN: int = len(RecipeDictionary.recipe_dict) - 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-    # Initialize and subscribe plate check timer
-    plate_check_timer = Timer.new()
-    add_child(plate_check_timer)
-    plate_check_timer.name = "PlateCheckTimer"
-    plate_check_timer.wait_time = GameData.PLATE_CHECK_INTERVAL
-    plate_check_timer.one_shot = false
-    plate_check_timer.timeout.connect(_check_completed_plates)
-    plate_check_timer.start()
 
     # Init Random
     random = RandomNumberGenerator.new()
@@ -45,8 +35,9 @@ func _ready() -> void:
         inactive_timers.append(new_timer)
 
 
-func first_setup(game_ui_manager: GameUIManager):
+func first_setup(game_ui_manager: GameUIManager, cooking_manager: CookingManager):
     ticket_ui_manager = game_ui_manager.ticket_ui_manager
+    cooking_manager.cooking_finished.connect(grade_completed_plate)
 
 
 func spawn_ticket() -> void:
@@ -90,30 +81,38 @@ func _ticket_expired(ticket: Ticket) -> void:
     # TODO: save tickets to show at end?
 
 
-func _check_completed_plates() -> void:
-    # check each plate against tickets, starting with the earliest ticket
-    var plates_to_complete: Array
+# plate_ingredients should be in form (carriable_id: int, count: int)
+func grade_completed_plate(plate_ingredients: Dictionary) -> bool:
+    print("TicketManager - Grading the following plate:")
+    print(plate_ingredients)
 
-    for plate in plate_process_queue:
-        var ticket_id_to_complete: int
+    var ticket_id_to_complete: int
 
-        for ticket in tickets:
-            # check ticket order against plate contents (margin of +- 1???)
-            # if we find a ticket close enough, select this ticket and break
-            ticket_id_to_complete = ticket.id
-            pass
+    # for each ticket
+    for ticket_id in tickets.keys():
+        var dish_id: int = tickets.get(ticket_id).dish_id
+        var recipe_ingredients: Dictionary = RecipeDictionary.recipe_dict[dish_id].get(RecipeDictionary.INGREDIENTS)
 
-        if ticket_id_to_complete == null:
-            break
-        # else grade current plate successfull, mark to remove from queue
-        plates_to_complete.append(plate)
-        # remove ticket_to_complete from tickets
-        tickets.erase(ticket_id_to_complete)
-
-    # clean up completed plates
-    for plate in plates_to_complete:
-        plate_process_queue.erase(plate)
+        # for each ingredient in the recipe
+        for ingredient_key in recipe_ingredients.keys():
+            # check if it exists in the plate, break to next ticket if not
+            var plate_ingredient_count = plate_ingredients.get(ingredient_key)
+            if plate_ingredient_count == null:
+                break
+            # else, check if the amount is correct
+            if plate_ingredient_count != recipe_ingredients.get(ingredient_key):
+                break
 
 
-func grade_plate(ingredients: Dictionary) -> bool:
+        ticket_id_to_complete = ticket_id
+        break
+        pass
+
+    # if we did not find a matching ticket, return false
+    if ticket_id_to_complete == null:
+        return false
+
+    # remove ticket_to_complete from tickets
+    tickets.erase(ticket_id_to_complete)
+
     return true

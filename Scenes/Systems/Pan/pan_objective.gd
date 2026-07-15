@@ -1,11 +1,11 @@
 extends Objective
 class_name PanObjective
-@onready var cooking: Cooking = $Cooking
 
+@export var cooking_manager: CookingManager
 @export var cook_timer: Timer
 @export var timer_indicator: TextureProgressBar
 
-func _ready() -> void:    
+func _ready() -> void:
     # set maxvalue for indicator
     timer_indicator.max_value = cook_timer.wait_time
 
@@ -18,20 +18,20 @@ func can_accept_item(item_id: int) -> bool:
 func add_ingredient(item_id: int, amount: int = 1) -> bool:
     if not can_accept_item(item_id):
         return false
-    return cooking.add_ingredient(item_id, amount)
+    return cooking_manager.add_ingredient(item_id, amount)
 
 func is_cooking() -> bool:
-    return cooking.is_cooking()
+    return cooking_manager.is_cooking()
 
 func get_time_left() -> float:
-    return cooking.get_time_left()
+    return cooking_manager.get_time_left()
 
 func get_ingredients() -> Dictionary:
-    return cooking.get_ingredients()
+    return cooking_manager.get_ingredients()
 
 func get_last_finished_ingredients() -> Dictionary:
-    return cooking.get_last_finished_ingredients()
-    
+    return cooking_manager.get_last_finished_ingredients()
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
     timer_indicator.tooltip_text = "%d:%02d" % [floor(cook_timer.time_left / 60), int(cook_timer.time_left) % 60]

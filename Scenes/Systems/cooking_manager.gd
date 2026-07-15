@@ -1,5 +1,5 @@
 extends Node
-class_name Cooking
+class_name CookingManager
 signal cooking_started(duration: float)
 signal ingredient_added(item_id: int, new_amount: int)
 signal cooking_finished(ingredients: Dictionary)
