@@ -122,5 +122,7 @@ func grade_completed_plate(plate_ingredients: Dictionary) -> bool:
 
     # remove ticket_to_complete from tickets
     tickets.erase(ticket_id_to_complete)
+    
+    print("Successful Plate!")
 
     return true

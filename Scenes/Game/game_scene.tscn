@@ -1,27 +1,27 @@
 [gd_scene format=4 uid="uid://ix3cebvvls0j"]
 
 [ext_resource type="Texture2D" uid="uid://dvcoxm2vvvhps" path="res://Asset/Screenshot 2026-07-06 151729.png" id="1_ctr27"]
-[ext_resource type="PackedScene" uid="uid://dmq4i8m6t7byd" path="res://scenes/Systems/Pooler/carried_object_pooler.tscn" id="2_y71v2"]
-[ext_resource type="PackedScene" uid="uid://c3cs21mitd80e" path="res://scenes/Systems/Tickets/ticket_manager.tscn" id="3_tw7da"]
-[ext_resource type="PackedScene" uid="uid://c0lvexnjh2auj" path="res://scenes/Systems/game_manager.tscn" id="4_8umfg"]
+[ext_resource type="PackedScene" uid="uid://dmq4i8m6t7byd" path="res://Scenes/Systems/Pooler/carried_object_pooler.tscn" id="2_y71v2"]
+[ext_resource type="PackedScene" uid="uid://c3cs21mitd80e" path="res://Scenes/Systems/Tickets/ticket_manager.tscn" id="3_tw7da"]
+[ext_resource type="PackedScene" uid="uid://c0lvexnjh2auj" path="res://Scenes/Systems/game_manager.tscn" id="4_8umfg"]
 [ext_resource type="Texture2D" uid="uid://c43buab63oh6i" path="res://Asset/Objective Sprites/Pork Bowl.svg" id="5_jevh0"]
-[ext_resource type="PackedScene" uid="uid://brio7g5u1317s" path="res://scenes/Systems/Pan/Pan.tscn" id="5_nvdyc"]
-[ext_resource type="Script" uid="uid://bhw7a54s81wwh" path="res://scenes/Systems/objective.gd" id="5_p15s5"]
-[ext_resource type="Script" uid="uid://b7d86811y3gy" path="res://scenes/Systems/little_guy.gd" id="5_wsift"]
+[ext_resource type="PackedScene" uid="uid://brio7g5u1317s" path="res://Scenes/Systems/Pan/Pan.tscn" id="5_nvdyc"]
+[ext_resource type="Script" uid="uid://bhw7a54s81wwh" path="res://Scenes/Systems/objective.gd" id="5_p15s5"]
+[ext_resource type="Script" uid="uid://b7d86811y3gy" path="res://Scenes/Systems/little_guy.gd" id="5_wsift"]
 [ext_resource type="Texture2D" uid="uid://jvtod7aqp3wt" path="res://Asset/Objective Sprites/MSG Cup.svg" id="5_yi1st"]
 [ext_resource type="Texture2D" uid="uid://bq0ehonbioyov" path="res://Asset/Sprites/Little Dude (No carry).svg" id="6_jxx51"]
 [ext_resource type="Texture2D" uid="uid://d5xrfrr3dlo4" path="res://Asset/Objective Sprites/Chicken Bowl.svg" id="6_kn4b3"]
-[ext_resource type="Script" uid="uid://dh3qds0vllotc" path="res://scenes/Game/unit_selector.gd" id="6_m6pt0"]
+[ext_resource type="Script" uid="uid://dh3qds0vllotc" path="res://Scenes/Game/unit_selector.gd" id="6_m6pt0"]
 [ext_resource type="Texture2D" uid="uid://bft4svupijd36" path="res://Asset/Objective Sprites/Oyster Bottle.svg" id="6_p3bnw"]
-[ext_resource type="Script" uid="uid://2hammvmw41m1" path="res://scenes/Systems/little_guy_group_manager.gd" id="6_wsift"]
+[ext_resource type="Script" uid="uid://2hammvmw41m1" path="res://Scenes/Systems/little_guy_group_manager.gd" id="6_wsift"]
 [ext_resource type="Texture2D" uid="uid://bg5npxa0k3abl" path="res://Asset/Objective Sprites/Shrimp Bowl.svg" id="7_3hq7a"]
 [ext_resource type="Texture2D" uid="uid://dhd3j8n1gm04a" path="res://Asset/Objective Sprites/Worchestershire Bottle.svg" id="7_n2mrn"]
-[ext_resource type="PackedScene" uid="uid://b4owtpdvtfo7i" path="res://scenes/LittleGuyGroup.tscn" id="7_wsift"]
+[ext_resource type="PackedScene" uid="uid://b4owtpdvtfo7i" path="res://Scenes/LittleGuyGroup.tscn" id="7_wsift"]
 [ext_resource type="Texture2D" uid="uid://bafi1jsatq26s" path="res://Asset/Objective Sprites/Bok Choy Barrel.svg" id="8_cid5o"]
 [ext_resource type="Texture2D" uid="uid://bq5rs2m17hynn" path="res://Asset/Objective Sprites/Soy Bottle.svg" id="8_p15s5"]
 [ext_resource type="Texture2D" uid="uid://c0u5fmxhd6rfv" path="res://Asset/Objective Sprites/Pepper Bottle.svg" id="9_nvdyc"]
 [ext_resource type="Texture2D" uid="uid://4vhn4nmrh40k" path="res://Asset/Objective Sprites/Salt Bottle.svg" id="10_jpyfg"]
-[ext_resource type="PackedScene" uid="uid://dce6j7tm6pgxh" path="res://scenes/Systems/UI/game_ui.tscn" id="10_y71v2"]
+[ext_resource type="PackedScene" uid="uid://dce6j7tm6pgxh" path="res://Scenes/Systems/UI/game_ui.tscn" id="10_y71v2"]
 [ext_resource type="Texture2D" uid="uid://fw2j5ican6dy" path="res://Asset/Objective Sprites/Rice Box.svg" id="11_18sgl"]
 [ext_resource type="Texture2D" uid="uid://d0qmxbtf1jg60" path="res://Asset/Objective Sprites/Noodle Box.svg" id="12_bgmid"]
 
@@ -838,6 +838,57 @@ scale = Vector2(1.59375, 1.59375)
 texture = ExtResource("6_jxx51")
 
 [node name="Selector" type="Line2D" parent="LittleGuys/Test5" unique_id=2057382757]
+position = Vector2(3.9512196, -0.89361763)
+scale = Vector2(0.85365856, 0.9361702)
+points = PackedVector2Array(24, -11, 24, 30, -11, 30, -11, -11, 24, -11)
+width = 3.0
+default_color = Color(1, 1, 0.09411765, 1)
+
+[node name="Test6" type="Node2D" parent="LittleGuys" unique_id=1085972264]
+position = Vector2(262, 250)
+script = ExtResource("5_wsift")
+
+[node name="Sprite2D" type="Sprite2D" parent="LittleGuys/Test6" unique_id=366402869]
+texture_filter = 1
+position = Vector2(9.5, 9.5)
+scale = Vector2(1.59375, 1.59375)
+texture = ExtResource("6_jxx51")
+
+[node name="Selector" type="Line2D" parent="LittleGuys/Test6" unique_id=1537395537]
+position = Vector2(3.9512196, -0.89361763)
+scale = Vector2(0.85365856, 0.9361702)
+points = PackedVector2Array(24, -11, 24, 30, -11, 30, -11, -11, 24, -11)
+width = 3.0
+default_color = Color(1, 1, 0.09411765, 1)
+
+[node name="Test7" type="Node2D" parent="LittleGuys" unique_id=1357387808]
+position = Vector2(300, 250)
+script = ExtResource("5_wsift")
+
+[node name="Sprite2D" type="Sprite2D" parent="LittleGuys/Test7" unique_id=412043623]
+texture_filter = 1
+position = Vector2(9.5, 9.5)
+scale = Vector2(1.59375, 1.59375)
+texture = ExtResource("6_jxx51")
+
+[node name="Selector" type="Line2D" parent="LittleGuys/Test7" unique_id=1232594250]
+position = Vector2(3.9512196, -0.89361763)
+scale = Vector2(0.85365856, 0.9361702)
+points = PackedVector2Array(24, -11, 24, 30, -11, 30, -11, -11, 24, -11)
+width = 3.0
+default_color = Color(1, 1, 0.09411765, 1)
+
+[node name="Test8" type="Node2D" parent="LittleGuys" unique_id=1668189592]
+position = Vector2(350, 250)
+script = ExtResource("5_wsift")
+
+[node name="Sprite2D" type="Sprite2D" parent="LittleGuys/Test8" unique_id=1982125781]
+texture_filter = 1
+position = Vector2(9.5, 9.5)
+scale = Vector2(1.59375, 1.59375)
+texture = ExtResource("6_jxx51")
+
+[node name="Selector" type="Line2D" parent="LittleGuys/Test8" unique_id=539652674]
 position = Vector2(3.9512196, -0.89361763)
 scale = Vector2(0.85365856, 0.9361702)
 points = PackedVector2Array(24, -11, 24, 30, -11, 30, -11, -11, 24, -11)

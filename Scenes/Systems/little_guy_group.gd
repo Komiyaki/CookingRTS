@@ -3,7 +3,7 @@ class_name LittleGuyGroup
 
 signal group_disbanded(group: LittleGuyGroup)
 
-@export var formation_radius: float = 50.0
+@export var formation_radius: float = 35.0
 @export var carried_object_offset: Vector2 = Vector2.ZERO
 
 var carried_object_pooler: CarriedObjectPooler

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c0lvexnjh2auj"]
 
-[ext_resource type="Script" uid="uid://ccls4ar2wll7w" path="res://scenes/Systems/game_manager.gd" id="1_jgdsd"]
+[ext_resource type="Script" uid="uid://ccls4ar2wll7w" path="res://Scenes/Systems/game_manager.gd" id="1_jgdsd"]
 
 [node name="GameManager" type="Node" unique_id=1000138197 node_paths=PackedStringArray("gm_round_timer", "gm_interround_timer", "gm_ticket_spawn_timer")]
 script = ExtResource("1_jgdsd")
@@ -16,4 +16,4 @@ one_shot = true
 one_shot = true
 
 [node name="TicketSpawnTimer" type="Timer" parent="." unique_id=1936461267]
-wait_time = 10.0
+wait_time = 20.0
