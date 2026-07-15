@@ -48,7 +48,8 @@ func _add_object_to_pool(new_object: PooledObject) -> void:
 
 func _add_objects_to_pool(count: int = 0) -> void:
     print("%s populating %s object pool to %d objects" % [name, object_name, initial_object_count])
-    while object_pool_count < count:
+    var goal_count: int = object_pool_count + count
+    while object_pool_count < goal_count:
         var new_object = object_scene.instantiate()
         _add_object_to_pool(new_object)
 
