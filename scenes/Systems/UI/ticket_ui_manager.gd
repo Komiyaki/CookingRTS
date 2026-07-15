@@ -1,4 +1,4 @@
-extends Node
+extends Container
 class_name TicketUIManager
 
 @export var ticket_ui_scene: PackedScene

@@ -1,6 +1,7 @@
 class_name RecipeDictionary
 
 const RECIPE_NAME: String = "recipe_name"
+const INGREDIENTS: String = "ingredients"
 
 const recipe_dict: Dictionary = {
     1: {

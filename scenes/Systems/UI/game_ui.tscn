@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://caqnfdpjinpod" path="res://scenes/Systems/UI/ticket_ui_manager.gd" id="5_xg5ic"]
 [ext_resource type="PackedScene" uid="uid://ckyf2viuvjyq8" path="res://scenes/Systems/UI/ticket_ui_object.tscn" id="6_6osq4"]
 
-[node name="GameUI" type="Control" unique_id=1445027906 node_paths=PackedStringArray("debug_ui_manager", "timer_ui_manager", "ticket_ui_manager")]
+[node name="GameUI" type="Control" unique_id=1496820845 node_paths=PackedStringArray("debug_ui_manager", "timer_ui_manager", "ticket_ui_manager")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,48 +15,75 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_rns2u")
-debug_ui_manager = NodePath("MarginContainer/HBoxContainer/DebugUI")
-timer_ui_manager = NodePath("MarginContainer/HBoxContainer/TimerUI")
-ticket_ui_manager = NodePath("MarginContainer/HBoxContainer/TicketUIManager")
+debug_ui_manager = NodePath("MarginContainer/DebugUI")
+timer_ui_manager = NodePath("RoundUI/TimerUI")
+ticket_ui_manager = NodePath("TicketUIManager")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=91373726]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_top = 0.004486084
+offset_right = 1280.0
+offset_bottom = 719.9955
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1392973880]
-layout_mode = 2
-
-[node name="DebugUI" type="AspectRatioContainer" parent="MarginContainer/HBoxContainer" unique_id=855082386 node_paths=PackedStringArray("round_label", "state_label")]
+[node name="DebugUI" type="AspectRatioContainer" parent="MarginContainer" unique_id=855082386 node_paths=PackedStringArray("round_label", "state_label")]
+visible = false
 layout_mode = 2
 script = ExtResource("2_u001w")
-round_label = NodePath("VBoxContainer/RoundLabel")
+round_label = NodePath("../../RoundUI/HBoxContainer/RoundLabel")
 state_label = NodePath("VBoxContainer/GaneStateLabel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/DebugUI" unique_id=513071584]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/DebugUI" unique_id=513071584]
 layout_mode = 2
 
-[node name="GaneStateLabel" type="Label" parent="MarginContainer/HBoxContainer/DebugUI/VBoxContainer" unique_id=2012519911]
+[node name="GaneStateLabel" type="Label" parent="MarginContainer/DebugUI/VBoxContainer" unique_id=2012519911]
 layout_mode = 2
 text = "STATE"
 label_settings = ExtResource("3_j3aq3")
 
-[node name="RoundLabel" type="Label" parent="MarginContainer/HBoxContainer/DebugUI/VBoxContainer" unique_id=175538697]
+[node name="RoundUI" type="VBoxContainer" parent="." unique_id=1971401982]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -111.5
+offset_top = 10.0
+offset_right = 111.5
+offset_bottom = 104.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="RoundUI" unique_id=2003872001]
+layout_mode = 2
+
+[node name="RoundText" type="Label" parent="RoundUI/HBoxContainer" unique_id=1406555518]
+layout_mode = 2
+text = "Round"
+label_settings = ExtResource("3_j3aq3")
+
+[node name="RoundLabel" type="Label" parent="RoundUI/HBoxContainer" unique_id=175538697]
 layout_mode = 2
 text = "ROUND"
 label_settings = ExtResource("3_j3aq3")
 
-[node name="TimerUI" type="AspectRatioContainer" parent="MarginContainer/HBoxContainer" unique_id=449169147 node_paths=PackedStringArray("timer_label")]
+[node name="TimerUI" type="AspectRatioContainer" parent="RoundUI" unique_id=449169147 node_paths=PackedStringArray("timer_label")]
 layout_mode = 2
+alignment_vertical = 0
 script = ExtResource("4_wvl1n")
 timer_label = NodePath("TimerLabel")
 
-[node name="TimerLabel" type="Label" parent="MarginContainer/HBoxContainer/TimerUI" unique_id=433242984]
+[node name="TimerLabel" type="Label" parent="RoundUI/TimerUI" unique_id=433242984]
 layout_mode = 2
 text = "TIMER"
 label_settings = ExtResource("3_j3aq3")
 
-[node name="TicketUIManager" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=2046784618]
-layout_mode = 2
+[node name="TicketUIManager" type="VBoxContainer" parent="." unique_id=2046784618]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 510.0
+offset_bottom = 710.0
 script = ExtResource("5_xg5ic")
 ticket_ui_scene = ExtResource("6_6osq4")

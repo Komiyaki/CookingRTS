@@ -866,3 +866,5 @@ anchors_preset = 0
 script = ExtResource("6_m6pt0")
 
 [node name="GameUI" parent="." unique_id=1445027906 instance=ExtResource("10_y71v2")]
+offset_right = 1152.0
+offset_bottom = 640.0

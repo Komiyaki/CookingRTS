@@ -1,5 +1,7 @@
 class_name CarriedObjectDictionary
 
+const NAME: String = "name"
+
 const id_dict: Dictionary = {
     # Plate
     0b000000: { # 0
