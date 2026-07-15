@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://dce6j7tm6pgxh" path="res://scenes/Systems/UI/game_ui.tscn" id="10_y71v2"]
 [ext_resource type="Texture2D" uid="uid://fw2j5ican6dy" path="res://Asset/Objective Sprites/Rice Box.svg" id="11_18sgl"]
 [ext_resource type="Texture2D" uid="uid://d0qmxbtf1jg60" path="res://Asset/Objective Sprites/Noodle Box.svg" id="12_bgmid"]
+[ext_resource type="Texture2D" uid="uid://34bswe7d45e6" path="res://icon.svg" id="24_1j4lt"]
 
 [sub_resource type="GDScript" id="GDScript_c53t7"]
 
@@ -304,6 +305,9 @@ texture = ExtResource("1_ctr27")
 [sub_resource type="TileSet" id="TileSet_ihfs7"]
 sources/0 = SubResource("TileSetAtlasSource_c53t7")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fui5a"]
+size = Vector2(128, 128)
+
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yi1st"]
 load_path = "res://.godot/imported/Bean Sprout barrel.svg-9049f60eac0850bc2568d402c7804ff8.ctex"
 
@@ -387,7 +391,18 @@ ticket_manager = NodePath("../TicketManager")
 
 [node name="CarriedObjectPooler" parent="." unique_id=728435351 instance=ExtResource("2_y71v2")]
 
-[node name="TicketManager" parent="." unique_id=241001017 instance=ExtResource("3_tw7da")]
+[node name="TicketManager" parent="." unique_id=241001017 node_paths=PackedStringArray("dish_deliver_area") instance=ExtResource("3_tw7da")]
+dish_deliver_area = NodePath("../PlateDeliveryArea")
+
+[node name="PlateDeliveryArea" type="Area2D" parent="." unique_id=88049783]
+position = Vector2(200, 500)
+scale = Vector2(3, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlateDeliveryArea" unique_id=386052385]
+shape = SubResource("RectangleShape2D_fui5a")
+
+[node name="Sprite2D" type="Sprite2D" parent="PlateDeliveryArea" unique_id=31097310]
+texture = ExtResource("24_1j4lt")
 
 [node name="Objectives" type="Node2D" parent="." unique_id=585522397]
 

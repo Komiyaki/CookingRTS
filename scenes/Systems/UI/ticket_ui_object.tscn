@@ -15,7 +15,9 @@ ticket_label = NodePath("TicketName")
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=1013520383]
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
+tooltip_text = "huhuhu"
 fill_mode = 5
 texture_under = ExtResource("2_lgfo5")
 texture_progress = ExtResource("2_lgfo5")

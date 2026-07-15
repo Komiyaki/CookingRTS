@@ -1,11 +1,13 @@
 extends Node
 class_name TicketManager
 
+@export var dish_deliver_area: Area2D
+
 @export var ticket_ui_manager: TicketUIManager
 
 @export var plate_check_timer: Timer
 
-@export var tickets: Dictionary
+@export var tickets: Dictionary # Tickets are stored as (ticketid, Ticket)
 @export var ticket_count: int = 0
 @export var inactive_timers: Array[Timer]
 @export var timer_scene: PackedScene
@@ -14,6 +16,8 @@ class_name TicketManager
 var random: RandomNumberGenerator
 const DISH_DICTIONARY_LEN: int = len(RecipeDictionary.recipe_dict) - 1
 
+@export var plate_process_queue: Array
+
 # TODO: implement plate/ticket scoring
 # @export var plate_zone:
 # Object to detect completed dishes, pick them up and grade
@@ -21,6 +25,10 @@ const DISH_DICTIONARY_LEN: int = len(RecipeDictionary.recipe_dict) - 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+    # Subscribe to dish area events
+    dish_deliver_area.area_entered.connect(_dish_area_entered)
+    dish_deliver_area.area_exited.connect(_dish_area_exited)
+
     # Initialize and subscribe plate check timer
     plate_check_timer = Timer.new()
     add_child(plate_check_timer)
@@ -88,5 +96,42 @@ func _ticket_expired(ticket: Ticket) -> void:
 
 
 func _check_completed_plates() -> void:
+    # check each plate against tickets, starting with the earliest ticket
+    var plates_to_complete: Array
 
+    for plate in plate_process_queue:
+        var ticket_id_to_complete: int
+
+        for ticket in tickets:
+            # check ticket order against plate contents (margin of +- 1???)
+            # if we find a ticket close enough, select this ticket and break
+            ticket_id_to_complete = ticket.id
+            pass
+
+        if ticket_id_to_complete == null:
+            break
+        # else grade current plate successfull, mark to remove from queue
+        plates_to_complete.append(plate)
+        # remove ticket_to_complete from tickets
+        tickets.erase(ticket_id_to_complete)
+
+    # clean up completed plates
+    for plate in plates_to_complete:
+        plate_process_queue.erase(plate)
+
+
+
+
+
+func _dish_area_entered(area: Area2D) -> void:
+    # check if area is of relevant type (collision layer??)
+    # if so, add to list for check on timer,
+    # help plate object remove itself
+    print("AREA ENTERED%s" % area.name )
+    if area is Object:
+        plate_process_queue.append(area)
+
+
+func _dish_area_exited(area: Area2D) -> void:
+    # nothing for now, probably
     pass
