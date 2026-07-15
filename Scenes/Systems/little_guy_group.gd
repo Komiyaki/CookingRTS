@@ -1,6 +1,8 @@
 extends Node2D
 class_name LittleGuyGroup
 
+signal group_disbanded(group: LittleGuyGroup)
+
 @export var formation_radius: float = 50.0
 @export var carried_object_offset: Vector2 = Vector2.ZERO
 
@@ -35,9 +37,22 @@ func add_unit(unit: LittleGuy) -> void:
 func remove_unit(unit: LittleGuy) -> void:
     if not units.has(unit):
         return
+    if units.size() == 1:
+        global_position = unit.global_position
     units.erase(unit)
     if unit.current_group == self:
         unit.current_group = null
+    if carried_object != null and is_instance_valid(carried_object):
+        if not can_carry_item(carried_object.id):
+            print(
+                "Group ",
+                group_id,
+                " no longer has enough units to carry ",
+                CarriedObjectDictionary.get_item_name(carried_object.id)
+            )
+            drop_current_carried_object()
+    if units.is_empty():
+        disband()
 
 func add_order(order: LittleGuyOrder) -> void:
     print("Group received order")
@@ -102,13 +117,17 @@ func move_group_to(pos: Vector2) -> void:
         units[i].move_to(pos + offset)
 
 func disband() -> void:
-    drop_current_carried_object()
+    if is_queued_for_deletion():
+        return
+    if carried_object != null and is_instance_valid(carried_object):
+        drop_current_carried_object()
     order_queue.clear()
     current_order = null
     for unit in units:
         if is_instance_valid(unit) and unit.current_group == self:
             unit.current_group = null
     units.clear()
+    group_disbanded.emit(self)
     queue_free()
 
 func replace_orders(order: LittleGuyOrder) -> void:
@@ -155,6 +174,19 @@ func execute_pickup_order(order: LittleGuyOrder) -> void:
         pickup_from_objective(target)
 
 func pickup_from_objective(objective: Objective) -> void:
+    var required_units: int = CarriedObjectDictionary.get_carry_value(objective.item_id)
+    if not can_carry_item(objective.item_id):
+        print(
+            "Group ",
+            group_id,
+            " cannot pick up ",
+            objective.get_item_name(),
+            ". Required units: ",
+            required_units,
+            ", current units: ",
+            get_valid_unit_count()
+        )
+        return
     drop_current_carried_object()
     attach_carried_item(objective.item_id)
     print("Group ", group_id, " picked up ", objective.get_item_name())
@@ -162,10 +194,28 @@ func pickup_from_objective(objective: Objective) -> void:
 func pickup_dropped_object(object: CarriedObject) -> void:
     if not object.can_interact():
         return
+    var required_units: int = CarriedObjectDictionary.get_carry_value(object.id)
+    if not can_carry_item(object.id):
+        print(
+            "Group ",
+            group_id,
+            " cannot pick up dropped ",
+            CarriedObjectDictionary.get_item_name(object.id),
+            ". Required units: ",
+            required_units,
+            ", current units: ",
+            get_valid_unit_count()
+        )
+        return
     drop_current_carried_object()
     carried_object = object
     carried_object.set_carried(self)
-    print("Group ", group_id, " picked up dropped ", CarriedObjectDictionary.get_item_name(object.id))
+    print(
+        "Group ",
+        group_id,
+        " picked up dropped ",
+        CarriedObjectDictionary.get_item_name(object.id)
+    )
 
 func drop_current_carried_object() -> void:
     if carried_object == null or not is_instance_valid(carried_object):
@@ -175,3 +225,16 @@ func drop_current_carried_object() -> void:
     carried_object = null
     object_to_drop.drop_to_world(objectives_container, global_position)
     print("Group ", group_id, " dropped ", CarriedObjectDictionary.get_item_name(object_to_drop.id))
+
+func get_valid_unit_count() -> int:
+    var count: int = 0
+    for unit in units:
+        if is_instance_valid(unit):
+            count += 1
+    return count
+
+func can_carry_item(item_id: int) -> bool:
+    if not CarriedObjectDictionary.has_id(item_id):
+        return false
+    var required_units: int = CarriedObjectDictionary.get_carry_value(item_id)
+    return get_valid_unit_count() >= required_units

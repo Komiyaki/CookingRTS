@@ -14,6 +14,10 @@ func _ready() -> void:
     print("Group manager found: ", group_manager)
 
 func _input(e: InputEvent) -> void:
+    if e.is_action_pressed("drop_object"):
+        drop_selected_groups_objects()
+        get_viewport().set_input_as_handled()
+        return
     if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_RIGHT and e.pressed:
         var clicked_pos: Vector2 = screen_to_world(e.position)
         var selected_units: Array[LittleGuy] = []
@@ -145,3 +149,14 @@ func get_interactable_at(world_pos: Vector2) -> Node2D:
             if parent is CarriedObject and parent.can_interact():
                 return parent
     return null
+
+func drop_selected_groups_objects() -> void:
+    var selected_groups: Array[LittleGuyGroup] = []
+    for unit in get_tree().get_nodes_in_group("selected-units"):
+        if unit is LittleGuy:
+            var unit_group: LittleGuyGroup = unit.current_group
+            if unit_group != null and is_instance_valid(unit_group):
+                if not selected_groups.has(unit_group):
+                    selected_groups.append(unit_group)
+    for group in selected_groups:
+        group.drop_current_carried_object()
