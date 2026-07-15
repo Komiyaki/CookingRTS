@@ -86,12 +86,16 @@ func grade_completed_plate(plate_ingredients: Dictionary) -> bool:
     print("TicketManager - Grading the following plate:")
     print(plate_ingredients)
 
-    var ticket_id_to_complete: int
+    var ticket_id_to_complete: int = -1
 
     # for each ticket
     for ticket_id in tickets.keys():
         var dish_id: int = tickets.get(ticket_id).dish_id
-        var recipe_ingredients: Dictionary = RecipeDictionary.recipe_dict[dish_id].get(RecipeDictionary.INGREDIENTS)
+        var recipe_ingredients: Dictionary = RecipeDictionary.recipe_dict[dish_id].get(RecipeDictionary.INGREDIENTS).duplicate(true)
+        # TODO: add special request modifiers here
+
+        print("Checking plate against recipe: ")
+        print(recipe_ingredients)
 
         # for each ingredient in the recipe
         for ingredient_key in recipe_ingredients.keys():
@@ -100,16 +104,20 @@ func grade_completed_plate(plate_ingredients: Dictionary) -> bool:
             if plate_ingredient_count == null:
                 break
             # else, check if the amount is correct
-            if plate_ingredient_count != recipe_ingredients.get(ingredient_key):
+            recipe_ingredients[ingredient_key] -= plate_ingredient_count
+            if recipe_ingredients[ingredient_key] != 0:
                 break
 
+            recipe_ingredients.erase(ingredient_key)
+
+        if len(recipe_ingredients) > 0:
+            continue
 
         ticket_id_to_complete = ticket_id
         break
-        pass
 
     # if we did not find a matching ticket, return false
-    if ticket_id_to_complete == null:
+    if ticket_id_to_complete < 0:
         return false
 
     # remove ticket_to_complete from tickets
