@@ -3,11 +3,16 @@ class_name TicketManager
 
 @export var ticket_ui_manager: TicketUIManager
 
+@export var plate_check_timer: Timer
+
 @export var tickets: Dictionary
 @export var ticket_count: int = 0
 @export var inactive_timers: Array[Timer]
 @export var timer_scene: PackedScene
 @export var ticket_capacity: int
+
+var random: RandomNumberGenerator
+const DISH_DICTIONARY_LEN: int = len(RecipeDictionary.recipe_dict) - 1
 
 # TODO: implement plate/ticket scoring
 # @export var plate_zone:
@@ -16,6 +21,18 @@ class_name TicketManager
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+    # Initialize and subscribe plate check timer
+    plate_check_timer = Timer.new()
+    add_child(plate_check_timer)
+    plate_check_timer.name = "PlateCheckTimer"
+    plate_check_timer.wait_time = GameData.PLATE_CHECK_INTERVAL
+    plate_check_timer.one_shot = false
+    plate_check_timer.timeout.connect(_check_completed_plates)
+    plate_check_timer.start()
+
+    # Init Random
+    random = RandomNumberGenerator.new()
+    random.seed = GameData.TICKET_MAN_RANDOM_SEED
 
     # Initialize ticket timers
     for i in range(ticket_capacity):
@@ -39,7 +56,7 @@ func spawn_ticket() -> void:
     ticket_count += 1
 
     # TODO: expand ticket dish selection
-    new_ticket.dish_id = 1
+    new_ticket.dish_id = random.randi_range(1, DISH_DICTIONARY_LEN)
 
     # TODO: add dish special requests
     new_ticket.time_limit += len(new_ticket.dish_request) * 10
@@ -55,10 +72,9 @@ func spawn_ticket() -> void:
     tickets.set(new_ticket.id, new_ticket)
     print("TicketManager - Created ticket id: %d" % new_ticket.id)
 
+    # Add ticket to the UI and start timer
     ticket_ui_manager.add_ticket_ui(new_ticket)
     new_timer.start()
-
-
 
 
 func _ticket_expired(ticket: Ticket) -> void:
@@ -69,3 +85,8 @@ func _ticket_expired(ticket: Ticket) -> void:
     # remove ticket from active tickets
     tickets.erase(ticket.id)
     # TODO: save tickets to show at end?
+
+
+func _check_completed_plates() -> void:
+
+    pass
