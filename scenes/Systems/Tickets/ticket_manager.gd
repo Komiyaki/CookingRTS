@@ -1,7 +1,6 @@
 extends Node
 class_name TicketManager
 
-@export var dish_deliver_area: Area2D
 
 @export var ticket_ui_manager: TicketUIManager
 
@@ -25,10 +24,6 @@ const DISH_DICTIONARY_LEN: int = len(RecipeDictionary.recipe_dict) - 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-    # Subscribe to dish area events
-    dish_deliver_area.area_entered.connect(_dish_area_entered)
-    dish_deliver_area.area_exited.connect(_dish_area_exited)
-
     # Initialize and subscribe plate check timer
     plate_check_timer = Timer.new()
     add_child(plate_check_timer)
@@ -120,18 +115,5 @@ func _check_completed_plates() -> void:
         plate_process_queue.erase(plate)
 
 
-
-
-
-func _dish_area_entered(area: Area2D) -> void:
-    # check if area is of relevant type (collision layer??)
-    # if so, add to list for check on timer,
-    # help plate object remove itself
-    print("AREA ENTERED%s" % area.name )
-    if area is Object:
-        plate_process_queue.append(area)
-
-
-func _dish_area_exited(area: Area2D) -> void:
-    # nothing for now, probably
-    pass
+func grade_plate(ingredients: Dictionary) -> bool:
+    return true
