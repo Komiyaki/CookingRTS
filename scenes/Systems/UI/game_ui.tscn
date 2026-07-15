@@ -15,31 +15,30 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_rns2u")
-debug_ui_manager = NodePath("MarginContainer/DebugUI")
+debug_ui_manager = NodePath("DebugUI")
 timer_ui_manager = NodePath("RoundUI/TimerUI")
 ticket_ui_manager = NodePath("TicketUIManager")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=91373726]
-layout_mode = 0
-offset_top = 0.004486084
-offset_right = 1280.0
-offset_bottom = 719.9955
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="DebugUI" type="AspectRatioContainer" parent="MarginContainer" unique_id=855082386 node_paths=PackedStringArray("round_label", "state_label")]
+[node name="DebugUI" type="AspectRatioContainer" parent="." unique_id=855082386 node_paths=PackedStringArray("round_label", "state_label")]
 visible = false
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -103.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 55.0
+grow_horizontal = 0
+alignment_horizontal = 2
 script = ExtResource("2_u001w")
-round_label = NodePath("../../RoundUI/HBoxContainer/RoundLabel")
+round_label = NodePath("../RoundUI/HBoxContainer/RoundLabel")
 state_label = NodePath("VBoxContainer/GaneStateLabel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/DebugUI" unique_id=513071584]
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugUI" unique_id=513071584]
 layout_mode = 2
 
-[node name="GaneStateLabel" type="Label" parent="MarginContainer/DebugUI/VBoxContainer" unique_id=2012519911]
+[node name="GaneStateLabel" type="Label" parent="DebugUI/VBoxContainer" unique_id=2012519911]
 layout_mode = 2
 text = "STATE"
 label_settings = ExtResource("3_j3aq3")
