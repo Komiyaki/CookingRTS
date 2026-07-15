@@ -33,16 +33,20 @@ func _input(e: InputEvent) -> void:
             return
         var clicked_target: Node2D = get_interactable_at(clicked_pos)
         var new_order := LittleGuyOrder.new()
-        if clicked_target != null:
+        if clicked_target is PanObjective:
+            new_order.action_type = LittleGuyOrder.ActionType.PUTDOWN
+            new_order.target_objective = clicked_target
+            new_order.target_position = clicked_target.get_target_position()
+        elif clicked_target is CarriedObject:
+            new_order.action_type = LittleGuyOrder.ActionType.PICKUP
             new_order.target_objective = clicked_target
             new_order.target_position = clicked_target.get_target_position()
             new_order.item_id = clicked_target.get_item_id()
-            if clicked_target is CarriedObject:
-                new_order.action_type = LittleGuyOrder.ActionType.PICKUP
-            elif clicked_target is Objective and clicked_target.objective_kind == Objective.ObjectiveKind.INGREDIENT_SOURCE:
-                new_order.action_type = LittleGuyOrder.ActionType.PICKUP
-            else:
-                new_order.action_type = LittleGuyOrder.ActionType.MOVE
+        elif clicked_target is Objective and clicked_target.objective_kind == Objective.ObjectiveKind.INGREDIENT_SOURCE:
+            new_order.action_type = LittleGuyOrder.ActionType.PICKUP
+            new_order.target_objective = clicked_target
+            new_order.target_position = clicked_target.get_target_position()
+            new_order.item_id = clicked_target.get_item_id()
         else:
             new_order.action_type = LittleGuyOrder.ActionType.MOVE
             new_order.target_position = clicked_pos

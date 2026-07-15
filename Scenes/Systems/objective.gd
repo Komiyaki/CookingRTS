@@ -16,6 +16,8 @@ enum ObjectiveKind {
 @onready var interaction_point: Marker2D = $Marker2D
 
 func _ready() -> void:
+    if objective_kind != ObjectiveKind.INGREDIENT_SOURCE:
+        return
     if item_id == -1:
         push_warning(name + " has no item ID assigned.")
     elif not CarriedObjectDictionary.has_id(item_id):

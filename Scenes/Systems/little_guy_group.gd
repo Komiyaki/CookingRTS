@@ -70,9 +70,10 @@ func start_next_order() -> void:
         return
     current_order = order_queue.pop_front()
     match current_order.action_type:
-        LittleGuyOrder.ActionType.MOVE, LittleGuyOrder.ActionType.PICKUP:
+        LittleGuyOrder.ActionType.MOVE, LittleGuyOrder.ActionType.PICKUP, LittleGuyOrder.ActionType.PUTDOWN:
             move_group_to(current_order.get_target_position())
         _:
+            print("Order type is not implemented: ", current_order.action_type)
             current_order = null
             start_next_order()
             return
@@ -82,13 +83,17 @@ func _process(_delta: float) -> void:
     update_group_position()
     if current_order == null:
         return
-    if current_order.action_type == LittleGuyOrder.ActionType.MOVE or current_order.action_type == LittleGuyOrder.ActionType.PICKUP:
-        if all_units_reached_target():
-            complete_current_order()
+    match current_order.action_type:
+        LittleGuyOrder.ActionType.MOVE, LittleGuyOrder.ActionType.PICKUP, LittleGuyOrder.ActionType.PUTDOWN:
+            if all_units_reached_target():
+                complete_current_order()
 
 func complete_current_order() -> void:
-    if current_order.action_type == LittleGuyOrder.ActionType.PICKUP:
-        execute_pickup_order(current_order)
+    match current_order.action_type:
+        LittleGuyOrder.ActionType.PICKUP:
+            execute_pickup_order(current_order)
+        LittleGuyOrder.ActionType.PUTDOWN:
+            execute_putdown_order(current_order)
     print("Group ", group_id, " completed order at ", current_order.get_target_position())
     current_order = null
     start_next_order()
@@ -238,3 +243,32 @@ func can_carry_item(item_id: int) -> bool:
         return false
     var required_units: int = CarriedObjectDictionary.get_carry_value(item_id)
     return get_valid_unit_count() >= required_units
+
+func has_carried_item() -> bool:
+    return carried_object != null and is_instance_valid(carried_object)
+
+func execute_putdown_order(order: LittleGuyOrder) -> void:
+    if order.target_objective == null or not is_instance_valid(order.target_objective):
+        return
+    if not order.target_objective is PanObjective:
+        return
+    if not has_carried_item():
+        print("Group ", group_id, " reached the pan but has no ingredient.")
+        return
+    var pan: PanObjective = order.target_objective
+    var deposited_item_id: int = carried_object.id
+    if not pan.add_ingredient(deposited_item_id):
+        print("Pan rejected ", CarriedObjectDictionary.get_item_name(deposited_item_id))
+        return
+    consume_current_carried_object()
+    print("Group ", group_id, " added ", CarriedObjectDictionary.get_item_name(deposited_item_id), " to the pan.")
+
+func consume_current_carried_object() -> void:
+    if not has_carried_item():
+        return
+    var object_to_consume: CarriedObject = carried_object
+    carried_object = null
+    object_to_consume.is_dropped = false
+    object_to_consume.set_pickup_enabled(false)
+    object_to_consume.reparent(carried_object_pooler, true)
+    object_to_consume.hide()

@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://brio7g5u1317s"]
+
+[ext_resource type="Script" uid="uid://ch54kw5q4woy5" path="res://Scenes/Systems/Pan/pan_objective.gd" id="1_nlgm5"]
+[ext_resource type="Texture2D" uid="uid://74mevo23nxb7" path="res://Asset/Objective Sprites/Pan.svg" id="2_7kele"]
+[ext_resource type="Texture2D" uid="uid://1blfogns3yqn" path="res://Asset/Sprites/clock.svg" id="2_ubr5s"]
+[ext_resource type="Script" uid="uid://dcrbr2m53xqr2" path="res://Scenes/Systems/cooking_manager.gd" id="3_ubr5s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jmabj"]
+
+[node name="Pan" type="Area2D" unique_id=2040683576 node_paths=PackedStringArray("cook_timer", "timer_indicator")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_nlgm5")
+cook_timer = NodePath("Cooking/CookTimer")
+timer_indicator = NodePath("TextureProgressBar")
+objective_kind = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=350218125]
+texture_filter = 1
+scale = Vector2(10, 10)
+texture = ExtResource("2_7kele")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1382596881]
+position = Vector2(0, 21)
+scale = Vector2(10, 10)
+shape = SubResource("CircleShape2D_jmabj")
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1605575225]
+position = Vector2(107, 22)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=368625129]
+offset_right = 32.0
+offset_bottom = 32.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "huhuhu"
+fill_mode = 5
+texture_under = ExtResource("2_ubr5s")
+texture_progress = ExtResource("2_ubr5s")
+tint_under = Color(0.80491084, 0.27291104, 0.26680964, 1)
+
+[node name="Cooking" type="Node" parent="." unique_id=910626101]
+script = ExtResource("3_ubr5s")
+
+[node name="CookTimer" type="Timer" parent="Cooking" unique_id=1509818625]
