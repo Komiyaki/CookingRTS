@@ -57,6 +57,7 @@ grow_horizontal = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="RoundUI" unique_id=2003872001]
 layout_mode = 2
+alignment = 1
 
 [node name="RoundText" type="Label" parent="RoundUI/HBoxContainer" unique_id=1406555518]
 layout_mode = 2
