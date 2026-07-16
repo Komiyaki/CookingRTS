@@ -8,7 +8,7 @@ const MAX_CONCURRENT_TICKETS: int = 10
 
 const PLATE_CHECK_INTERVAL: int = 1
 
-const TICKET_MAN_RANDOM_SEED: int = 1025485802123
+const PLATE_SUCESS_POINTS: int = 1
 
 enum GameState {
 FIRST_LOAD,
