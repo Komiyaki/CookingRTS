@@ -6,7 +6,7 @@ class_name PanObjective
 @export var timer_indicator: TextureProgressBar
 @export var ingredient_visuals: Node2D
 @export var placement_shape: CollisionShape2D
-@onready var carried_object_pooler: CarriedObjectPooler = $"res://Scenes/Systems/Pooler/carried_object_pooler.gd"
+@export var carried_object_pooler: CarriedObjectPooler
 @export var placement_padding: float = 16.0
 
 var ingredient_objects: Array[CarriedObject] = []

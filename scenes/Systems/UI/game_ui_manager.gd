@@ -9,6 +9,12 @@ class_name GameUIManager
 @export var pause_ui: Control
 @export var pause_gray: ColorRect
 
+@export var restart_screen: Container
+@export var restart_button: Button
+@export var exit_button: Button
+@export var highscore_label: Label
+@export var score_label: Label
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
     _check_dependencies()
@@ -38,4 +44,11 @@ func _toggle_pause(is_paused: bool) -> void:
         pause_ui.visible = false
         pause_gray.visible = false
         # playing_ui.visible = true
+    pass
+
+func do_gameover(high_score: int, current_score: int):
+    highscore_label.text = str(high_score)
+    score_label.text = str(current_score)
+    restart_screen.visible = true
+
     pass

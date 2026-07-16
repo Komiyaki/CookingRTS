@@ -4,6 +4,8 @@ class_name GameManager
 const debug: bool = true
 
 
+@export var main_menu_scene: String = "res://scenes/MainMenu/main_menu.tscn"
+
 @onready var tree_root: SceneTree = self.get_tree()
 
 @export var carried_object_pool: CarriedObjectPooler
@@ -15,7 +17,12 @@ const debug: bool = true
 @export var gm_interround_timer: Timer
 @export var gm_ticket_spawn_timer: Timer
 
-@export var high_score: int = 0
+@export var high_score: int:
+    set(value):
+        SaveData.high_score = value
+    get:
+        return SaveData.high_score
+
 
 signal points_change_event(previous_amount: int, new_amount: int)
 @export var current_points: int = 0:
@@ -60,6 +67,11 @@ func _ready() -> void:
 
     gm_ticket_spawn_timer.timeout.connect(_spawn_ticket_timer_end)
 
+    ticket_manager.point_event.connect(_process_point_event)
+
+    ui_manager.restart_button.pressed.connect(_process_game_restart)
+    ui_manager.exit_button.pressed.connect(_process_return_to_menu)
+
     # carried_object_pool.spawn_carried_object(Vector2.ONE * 200, 0)
 
 func _check_dependencies() -> void:
@@ -78,6 +90,7 @@ func _check_dependencies() -> void:
 func _call_first_setup() -> void:
     ui_manager.first_setup(self)
     ticket_manager.first_setup(ui_manager, pan.cooking_manager)
+    pan.carried_object_pooler = carried_object_pool
 
 # process pause inputs
 func _input(event: InputEvent) -> void:
@@ -129,6 +142,7 @@ func _process(delta: float) -> void:
             pass
 
         GameData.GameState.RESTART:
+            tree_root.reload_current_scene()
             pass
 
         _:
@@ -138,6 +152,10 @@ func _process(delta: float) -> void:
 
 func _round_timer_end() -> void:
     game_state = GameData.GameState.GAME_OVER
+    if current_points > high_score:
+        high_score = current_points
+    is_paused = true
+    ui_manager.do_gameover(high_score, current_points)
     # gm_interround_timer.start()
 
 func _interround_timer_end() -> void:
@@ -147,4 +165,12 @@ func _spawn_ticket_timer_end() -> void:
     ticket_manager.spawn_ticket()
 
 func _process_point_event(amount: int) -> void:
+    print("POINTS INCREASED %d" % amount)
     current_points += amount
+
+func _process_game_restart():
+    is_paused = false
+    tree_root.reload_current_scene()
+
+func _process_return_to_menu():
+    tree_root.change_scene_to_file(main_menu_scene)

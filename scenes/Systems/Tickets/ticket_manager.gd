@@ -77,9 +77,11 @@ func _ticket_expired(ticket: Ticket) -> void:
     tickets.erase(ticket.id)
     # TODO: save tickets to show at end?
 
-
+# solve ticket cheat
 func _input(event: InputEvent) -> void:
     if event.is_action_pressed("solve_ticket"):
+        if len(tickets) <= 0:
+            return
         grade_completed_plate(RecipeDictionary.recipe_dict.get(tickets[tickets.keys()[0]].dish_id).get(RecipeDictionary.INGREDIENTS).duplicate(true))
 
 # plate_ingredients should be in form (carriable_id: int, count: int)

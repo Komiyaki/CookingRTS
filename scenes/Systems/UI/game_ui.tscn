@@ -17,7 +17,7 @@ outline_color = Color(0, 0, 0, 1)
 shadow_size = 8
 shadow_color = Color(0, 0, 0, 0.78039217)
 
-[node name="GameUI" type="Control" unique_id=1496820845 node_paths=PackedStringArray("debug_ui_manager", "timer_ui_manager", "ticket_ui_manager", "playing_ui", "pause_ui", "pause_gray")]
+[node name="GameUI" type="Control" unique_id=1496820845 node_paths=PackedStringArray("debug_ui_manager", "timer_ui_manager", "ticket_ui_manager", "playing_ui", "pause_ui", "pause_gray", "restart_screen", "restart_button", "exit_button", "highscore_label", "score_label")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -32,6 +32,11 @@ ticket_ui_manager = NodePath("PlayingUI/TicketUIManager")
 playing_ui = NodePath("PlayingUI")
 pause_ui = NodePath("PauseUI")
 pause_gray = NodePath("PauseUI/PauseGray")
+restart_screen = NodePath("PauseUI/CenterContainer")
+restart_button = NodePath("PauseUI/CenterContainer/VBoxContainer/RestartButton")
+exit_button = NodePath("PauseUI/CenterContainer/VBoxContainer/QuitButton")
+highscore_label = NodePath("PauseUI/CenterContainer/VBoxContainer/HBoxContainer/HiScoreLabel")
+score_label = NodePath("PauseUI/CenterContainer/VBoxContainer/HBoxContainer2/ScoreLabel")
 
 [node name="PlayingUI" type="Control" parent="." unique_id=1891822287]
 anchors_preset = 0
@@ -71,9 +76,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 508.5
+offset_left = 445.0
 offset_top = 10.0
-offset_right = 731.5
+offset_right = 668.0
 offset_bottom = 104.0
 grow_horizontal = 2
 
@@ -140,3 +145,46 @@ layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 color = Color(0, 0, 0, 0.20784314)
+
+[node name="CenterContainer" type="CenterContainer" parent="PauseUI" unique_id=1119898343]
+visible = false
+layout_mode = 0
+offset_left = 575.0
+offset_top = 320.0
+offset_right = 746.0
+offset_bottom = 405.0
+use_top_left = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseUI/CenterContainer" unique_id=906118583]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseUI/CenterContainer/VBoxContainer" unique_id=795981656]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PauseUI/CenterContainer/VBoxContainer/HBoxContainer" unique_id=185410050]
+layout_mode = 2
+text = "High Score: "
+
+[node name="HiScoreLabel" type="Label" parent="PauseUI/CenterContainer/VBoxContainer/HBoxContainer" unique_id=1084020172]
+layout_mode = 2
+text = "SCORE"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PauseUI/CenterContainer/VBoxContainer" unique_id=37728992]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="PauseUI/CenterContainer/VBoxContainer/HBoxContainer2" unique_id=697208959]
+layout_mode = 2
+text = "Current Score: "
+
+[node name="ScoreLabel" type="Label" parent="PauseUI/CenterContainer/VBoxContainer/HBoxContainer2" unique_id=575446522]
+layout_mode = 2
+text = "SCORE"
+
+[node name="RestartButton" type="Button" parent="PauseUI/CenterContainer/VBoxContainer" unique_id=1941813244]
+layout_mode = 2
+text = "Restart"
+
+[node name="QuitButton" type="Button" parent="PauseUI/CenterContainer/VBoxContainer" unique_id=1925708583]
+layout_mode = 2
+text = "Exit"

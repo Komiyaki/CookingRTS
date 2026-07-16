@@ -25,6 +25,10 @@ shift_right_click={
 ]
 }
 
+[autoload]
+
+SaveData="*uid://hahh4d6mks30"
+
 [display]
 
 window/size/viewport_width=1150
