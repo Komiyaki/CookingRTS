@@ -1,42 +1,74 @@
 [gd_scene format=3 uid="uid://4fbni8lbupi8"]
 
-[ext_resource type="Script" uid="uid://d15dmya5rexvm" path="res://scenes/MainMenu/main_menu_controller.gd" id="1_ekxnf"]
-[ext_resource type="Texture2D" uid="uid://34bswe7d45e6" path="res://icon.svg" id="1_l6cm7"]
+[ext_resource type="Script" uid="uid://d15dmya5rexvm" path="res://Scenes/MainMenu/main_menu_controller.gd" id="1_ekxnf"]
+[ext_resource type="Texture2D" uid="uid://bkqgmfeqtaaiw" path="res://Asset/main menu bg.png" id="1_v763k"]
 
-[node name="MainMenu" type="Node2D" unique_id=131280057]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_uqdog"]
+load_path = "res://.godot/imported/Little Dude (Carry).svg-a22f30adf5c21ab3d40a7a1d0489666e.ctex"
 
-[node name="MainMenu" type="MarginContainer" parent="." unique_id=630863642 node_paths=PackedStringArray("start_button", "exit_button")]
+[node name="MainMenu" type="Control" unique_id=2019021266]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Background" type="TextureRect" parent="." unique_id=1923401340]
+modulate = Color(0.54149264, 0.68893415, 1, 0.223)
+show_behind_parent = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 2.0
+offset_right = 1152.0
+offset_bottom = 640.0
+texture = ExtResource("1_v763k")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Logo" type="TextureRect" parent="." unique_id=354930598]
+texture_filter = 1
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 0
+offset_left = -1.0
+offset_top = -110.0
+offset_right = 1151.0
+offset_bottom = 1042.0
+texture = SubResource("CompressedTexture2D_uqdog")
+expand_mode = 5
+
+[node name="MenuLayer" type="Control" parent="." unique_id=1150454936]
+anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_ekxnf")
-start_button = NodePath("VBoxContainer/AspectRatioContainer/VBoxContainer/StartButton")
-exit_button = NodePath("VBoxContainer/AspectRatioContainer/VBoxContainer/ExitButton")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu" unique_id=1129303654]
-layout_mode = 2
+[node name="Label" type="Label" parent="MenuLayer" unique_id=806300803]
+layout_mode = 0
+offset_left = 525.0
+offset_top = 50.0
+offset_right = 751.0
+offset_bottom = 117.0
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/font_size = 48
+text = "COOKOFF"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Logo" type="TextureRect" parent="MainMenu/VBoxContainer" unique_id=354930598]
-layout_mode = 2
-texture = ExtResource("1_l6cm7")
+[node name="Buttons" type="VBoxContainer" parent="MenuLayer" unique_id=1485801161]
+layout_mode = 0
+offset_left = 476.0
+offset_top = 400.0
+offset_right = 675.0
+offset_bottom = 466.0
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="MainMenu/VBoxContainer" unique_id=1500342063]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/VBoxContainer/AspectRatioContainer" unique_id=1485801161]
-layout_mode = 2
-
-[node name="StartButton" type="Button" parent="MainMenu/VBoxContainer/AspectRatioContainer/VBoxContainer" unique_id=1351702320]
+[node name="StartButton" type="Button" parent="MenuLayer/Buttons" unique_id=1351702320]
 layout_mode = 2
 text = "Start"
 
-[node name="OptionsButton" type="Button" parent="MainMenu/VBoxContainer/AspectRatioContainer/VBoxContainer" unique_id=614433953]
-layout_mode = 2
-text = "Options"
-
-[node name="ExitButton" type="Button" parent="MainMenu/VBoxContainer/AspectRatioContainer/VBoxContainer" unique_id=337331655]
+[node name="ExitButton" type="Button" parent="MenuLayer/Buttons" unique_id=337331655]
 layout_mode = 2
 text = "Exit"
 
-[node name="CreditsButton" type="Button" parent="MainMenu/VBoxContainer/AspectRatioContainer/VBoxContainer" unique_id=1414517101]
-layout_mode = 2
-text = "Credits"
+[node name="MainMenu" type="MarginContainer" parent="." unique_id=630863642]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 640.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_ekxnf")
