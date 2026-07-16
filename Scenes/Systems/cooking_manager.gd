@@ -3,7 +3,7 @@ class_name CookingManager
 signal cooking_started(duration: float)
 signal ingredient_added(item_id: int, new_amount: int)
 signal cooking_finished(ingredients: Dictionary)
-@export var cooking_duration: float = 60.0
+@export var cooking_duration: float = 50.0
 @onready var cook_timer: Timer = $CookTimer
 var ingredients: Dictionary = {}
 var last_finished_ingredients: Dictionary = {}
@@ -41,5 +41,5 @@ func get_last_finished_ingredients() -> Dictionary:
 
 func _on_cook_timer_timeout() -> void:
     last_finished_ingredients = ingredients.duplicate(true)
-    ingredients.clear()
     cooking_finished.emit(last_finished_ingredients.duplicate(true))
+    ingredients.clear()

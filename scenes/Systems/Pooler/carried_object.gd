@@ -43,3 +43,19 @@ func drop_to_world(world_parent: Node2D, drop_position: Vector2) -> void:
 
 func set_pickup_enabled(enabled: bool) -> void:
     pickup_shape.set_deferred("disabled", not enabled)
+
+func set_in_pan(new_parent: Node2D, new_position: Vector2, new_rotation: float) -> void:
+    is_dropped = false
+    set_pickup_enabled(false)
+    reparent(new_parent, true)
+    position = new_position
+    rotation = new_rotation
+    show()
+
+func deactivate_for_pool(pool_parent: Node) -> void:
+    is_dropped = false
+    set_pickup_enabled(false)
+    reparent(pool_parent, true)
+    position = Vector2.ZERO
+    rotation = 0.0
+    hide()

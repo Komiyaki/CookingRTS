@@ -1,7 +1,7 @@
 extends Node2D
 class_name LittleGuy
 
-const MOVE_SPEED: float = 175.0
+const MOVE_SPEED: float = 120.0
 const ARRIVAL_DISTANCE: float = 0.1
 var target_pos: Vector2
 var current_group: LittleGuyGroup = null

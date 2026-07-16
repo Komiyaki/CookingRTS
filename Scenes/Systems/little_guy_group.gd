@@ -256,11 +256,12 @@ func execute_putdown_order(order: LittleGuyOrder) -> void:
         print("Group ", group_id, " reached the pan but has no ingredient.")
         return
     var pan: PanObjective = order.target_objective
-    var deposited_item_id: int = carried_object.id
-    if not pan.add_ingredient(deposited_item_id):
+    var object_to_add: CarriedObject = carried_object
+    var deposited_item_id: int = object_to_add.id
+    if not pan.add_carried_object(object_to_add):
         print("Pan rejected ", CarriedObjectDictionary.get_item_name(deposited_item_id))
         return
-    consume_current_carried_object()
+    carried_object = null
     print("Group ", group_id, " added ", CarriedObjectDictionary.get_item_name(deposited_item_id), " to the pan.")
 
 func consume_current_carried_object() -> void:
