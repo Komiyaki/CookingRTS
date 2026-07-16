@@ -137,8 +137,8 @@ func _process(delta: float) -> void:
     pass
 
 func _round_timer_end() -> void:
-    game_state = GameData.GameState.INTERROUND
-    gm_interround_timer.start()
+    game_state = GameData.GameState.GAME_OVER
+    # gm_interround_timer.start()
 
 func _interround_timer_end() -> void:
     game_state = GameData.GameState.ROUND_SWITCH

@@ -78,6 +78,10 @@ func _ticket_expired(ticket: Ticket) -> void:
     # TODO: save tickets to show at end?
 
 
+func _input(event: InputEvent) -> void:
+    if event.is_action_pressed("solve_ticket"):
+        grade_completed_plate(RecipeDictionary.recipe_dict.get(tickets[tickets.keys()[0]].dish_id).get(RecipeDictionary.INGREDIENTS).duplicate(true))
+
 # plate_ingredients should be in form (carriable_id: int, count: int)
 func grade_completed_plate(plate_ingredients: Dictionary) -> bool:
     print("TicketManager - Grading the following plate:")
@@ -118,6 +122,8 @@ func grade_completed_plate(plate_ingredients: Dictionary) -> bool:
         return false
 
     # remove ticket_to_complete from tickets
+    tickets.get(ticket_id_to_complete).timer.stop()
+    tickets.get(ticket_id_to_complete).timer.timeout.emit()
     tickets.erase(ticket_id_to_complete)
 
     print("Successful Plate!")
