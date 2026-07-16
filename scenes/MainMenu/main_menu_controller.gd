@@ -1,10 +1,8 @@
 extends MarginContainer
 
 @export var game_scene: String = "res://Scenes/Game/game_scene.tscn"
-#@export var start_button: Button
-#@export var exit_button: Button
-@onready var start_button: Button = $Buttons/StartButton
-@onready var exit_button: Button = $Buttons/StartButton
+@export var start_button: Button
+@export var exit_button: Button
 
 
 func _ready() -> void:
