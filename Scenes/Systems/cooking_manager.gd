@@ -3,7 +3,7 @@ class_name CookingManager
 signal cooking_started(duration: float)
 signal ingredient_added(item_id: int, new_amount: int)
 signal cooking_finished(ingredients: Dictionary)
-@export var cooking_duration: float = 50.0
+@export var cooking_duration: float = 60.0
 @onready var cook_timer: Timer = $CookTimer
 var ingredients: Dictionary = {}
 var last_finished_ingredients: Dictionary = {}

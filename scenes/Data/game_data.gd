@@ -1,7 +1,7 @@
 class_name GameData
 
 
-const ROUND_TIMER_SECONDS: int = 120
+const ROUND_TIMER_SECONDS: int = 240
 const INTERROUND_TIMER_SECONDS: int = 30
 
 const MAX_CONCURRENT_TICKETS: int = 10
