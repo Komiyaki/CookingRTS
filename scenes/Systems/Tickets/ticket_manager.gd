@@ -10,7 +10,6 @@ class_name TicketManager
 @export var timer_scene: PackedScene
 @export var ticket_capacity: int
 
-var random: RandomNumberGenerator
 const DISH_DICTIONARY_LEN: int = len(RecipeDictionary.recipe_dict) - 1
 
 @export var plate_process_queue: Array
@@ -22,10 +21,6 @@ const DISH_DICTIONARY_LEN: int = len(RecipeDictionary.recipe_dict) - 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-
-    # Init Random
-    random = RandomNumberGenerator.new()
-    random.seed = GameData.TICKET_MAN_RANDOM_SEED
 
     # Initialize ticket timers
     for i in range(ticket_capacity):
@@ -50,7 +45,7 @@ func spawn_ticket() -> void:
     ticket_count += 1
 
     # TODO: expand ticket dish selection
-    new_ticket.dish_id = random.randi_range(1, DISH_DICTIONARY_LEN)
+    new_ticket.dish_id = randi_range(1, DISH_DICTIONARY_LEN)
 
     # TODO: add dish special requests
     new_ticket.time_limit += len(new_ticket.dish_request) * 10
@@ -122,7 +117,7 @@ func grade_completed_plate(plate_ingredients: Dictionary) -> bool:
 
     # remove ticket_to_complete from tickets
     tickets.erase(ticket_id_to_complete)
-    
+
     print("Successful Plate!")
 
     return true
