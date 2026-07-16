@@ -3,9 +3,19 @@
 [ext_resource type="Script" uid="uid://cy05wye1dldrh" path="res://scenes/Systems/UI/game_ui_manager.gd" id="1_rns2u"]
 [ext_resource type="Script" uid="uid://v42fyl7ityev" path="res://scenes/Systems/UI/debug_ui_manager.gd" id="2_u001w"]
 [ext_resource type="LabelSettings" uid="uid://bqn8w0xr6l1h0" path="res://scenes/Systems/UI/debug_label_settings.tres" id="3_j3aq3"]
+[ext_resource type="FontFile" uid="uid://b1w0vjonjsmti" path="res://Asset/BoldPixels.ttf" id="4_f0r3t"]
 [ext_resource type="Script" uid="uid://cxgf8j8duc82k" path="res://scenes/Systems/UI/timer_ui.gd" id="4_wvl1n"]
+[ext_resource type="LabelSettings" uid="uid://cg7vpujrdeytc" path="res://scenes/Systems/UI/prod_label_settings.tres" id="5_hrjfa"]
 [ext_resource type="Script" uid="uid://caqnfdpjinpod" path="res://scenes/Systems/UI/ticket_ui_manager.gd" id="5_xg5ic"]
 [ext_resource type="PackedScene" uid="uid://ckyf2viuvjyq8" path="res://scenes/Systems/UI/ticket_ui_object.tscn" id="6_6osq4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6osq4"]
+font = ExtResource("4_f0r3t")
+font_size = 32
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.78039217)
 
 [node name="GameUI" type="Control" unique_id=1496820845 node_paths=PackedStringArray("debug_ui_manager", "timer_ui_manager", "ticket_ui_manager", "playing_ui", "pause_ui", "pause_gray")]
 process_mode = 3
@@ -69,6 +79,7 @@ grow_horizontal = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PlayingUI/RoundUI" unique_id=2003872001]
 process_mode = 1
+visible = false
 layout_mode = 2
 alignment = 1
 
@@ -76,13 +87,13 @@ alignment = 1
 process_mode = 1
 layout_mode = 2
 text = "Round"
-label_settings = ExtResource("3_j3aq3")
+label_settings = SubResource("LabelSettings_6osq4")
 
 [node name="RoundLabel" type="Label" parent="PlayingUI/RoundUI/HBoxContainer" unique_id=175538697]
 process_mode = 1
 layout_mode = 2
 text = "ROUND"
-label_settings = ExtResource("3_j3aq3")
+label_settings = SubResource("LabelSettings_6osq4")
 
 [node name="TimerUI" type="AspectRatioContainer" parent="PlayingUI/RoundUI" unique_id=449169147 node_paths=PackedStringArray("timer_label")]
 process_mode = 1
@@ -95,15 +106,25 @@ timer_label = NodePath("TimerLabel")
 process_mode = 1
 layout_mode = 2
 text = "TIMER"
-label_settings = ExtResource("3_j3aq3")
+label_settings = SubResource("LabelSettings_6osq4")
+
+[node name="OrdersLabel" type="Label" parent="PlayingUI" unique_id=468488285]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 310.0
+offset_bottom = 38.0
+text = "Orders"
+label_settings = ExtResource("5_hrjfa")
+horizontal_alignment = 1
 
 [node name="TicketUIManager" type="VBoxContainer" parent="PlayingUI" unique_id=2046784618]
 process_mode = 1
 layout_mode = 1
 offset_left = 10.0
-offset_top = 10.0
+offset_top = 40.0
 offset_right = 510.0
-offset_bottom = 710.0
+offset_bottom = 640.0
 script = ExtResource("5_xg5ic")
 ticket_ui_scene = ExtResource("6_6osq4")
 

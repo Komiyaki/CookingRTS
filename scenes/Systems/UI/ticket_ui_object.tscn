@@ -1,7 +1,16 @@
 [gd_scene format=3 uid="uid://ckyf2viuvjyq8"]
 
-[ext_resource type="Script" uid="uid://b0mtatp566qjc" path="res://Scenes/Systems/UI/ticket_ui_object.gd" id="1_as7w1"]
+[ext_resource type="Script" uid="uid://b0mtatp566qjc" path="res://scenes/Systems/UI/ticket_ui_object.gd" id="1_as7w1"]
 [ext_resource type="Texture2D" uid="uid://1blfogns3yqn" path="res://Asset/Sprites/clock.svg" id="2_lgfo5"]
+[ext_resource type="FontFile" uid="uid://b1w0vjonjsmti" path="res://Asset/BoldPixels.ttf" id="3_qkg70"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6osq4"]
+font = ExtResource("3_qkg70")
+font_size = 32
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.78039217)
 
 [node name="TicketUiObject" type="HBoxContainer" unique_id=1611380509 node_paths=PackedStringArray("timer_indicator", "ticket_label")]
 anchors_preset = 15
@@ -19,7 +28,6 @@ ticket_label = NodePath("TicketName")
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-tooltip_text = "huhuhu"
 fill_mode = 5
 texture_under = ExtResource("2_lgfo5")
 texture_progress = ExtResource("2_lgfo5")
@@ -28,3 +36,4 @@ tint_under = Color(0.9061179, 0.806705, 7.70092e-07, 1)
 [node name="TicketName" type="Label" parent="." unique_id=530878912]
 layout_mode = 2
 text = "Name"
+label_settings = SubResource("LabelSettings_6osq4")
