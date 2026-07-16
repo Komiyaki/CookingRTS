@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://ckyf2viuvjyq8" path="res://scenes/Systems/UI/ticket_ui_object.tscn" id="6_6osq4"]
 
 [node name="GameUI" type="Control" unique_id=1496820845 node_paths=PackedStringArray("debug_ui_manager", "timer_ui_manager", "ticket_ui_manager")]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,6 +21,7 @@ timer_ui_manager = NodePath("RoundUI/TimerUI")
 ticket_ui_manager = NodePath("TicketUIManager")
 
 [node name="DebugUI" type="AspectRatioContainer" parent="." unique_id=855082386 node_paths=PackedStringArray("round_label", "state_label")]
+process_mode = 1
 visible = false
 layout_mode = 1
 anchors_preset = 1
@@ -36,14 +38,17 @@ round_label = NodePath("../RoundUI/HBoxContainer/RoundLabel")
 state_label = NodePath("VBoxContainer/GaneStateLabel")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DebugUI" unique_id=513071584]
+process_mode = 1
 layout_mode = 2
 
 [node name="GaneStateLabel" type="Label" parent="DebugUI/VBoxContainer" unique_id=2012519911]
+process_mode = 1
 layout_mode = 2
 text = "STATE"
 label_settings = ExtResource("3_j3aq3")
 
 [node name="RoundUI" type="VBoxContainer" parent="." unique_id=1971401982]
+process_mode = 1
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -55,31 +60,37 @@ offset_bottom = 104.0
 grow_horizontal = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="RoundUI" unique_id=2003872001]
+process_mode = 1
 layout_mode = 2
 alignment = 1
 
 [node name="RoundText" type="Label" parent="RoundUI/HBoxContainer" unique_id=1406555518]
+process_mode = 1
 layout_mode = 2
 text = "Round"
 label_settings = ExtResource("3_j3aq3")
 
 [node name="RoundLabel" type="Label" parent="RoundUI/HBoxContainer" unique_id=175538697]
+process_mode = 1
 layout_mode = 2
 text = "ROUND"
 label_settings = ExtResource("3_j3aq3")
 
 [node name="TimerUI" type="AspectRatioContainer" parent="RoundUI" unique_id=449169147 node_paths=PackedStringArray("timer_label")]
+process_mode = 1
 layout_mode = 2
 alignment_vertical = 0
 script = ExtResource("4_wvl1n")
 timer_label = NodePath("TimerLabel")
 
 [node name="TimerLabel" type="Label" parent="RoundUI/TimerUI" unique_id=433242984]
+process_mode = 1
 layout_mode = 2
 text = "TIMER"
 label_settings = ExtResource("3_j3aq3")
 
 [node name="TicketUIManager" type="VBoxContainer" parent="." unique_id=2046784618]
+process_mode = 1
 layout_mode = 1
 offset_left = 10.0
 offset_top = 10.0

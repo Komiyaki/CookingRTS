@@ -4,6 +4,8 @@ class_name GameManager
 const debug: bool = true
 
 
+@onready var tree_root: SceneTree = self.get_tree()
+
 @export var carried_object_pool: CarriedObjectPooler
 @export var ui_manager: GameUIManager
 @export var ticket_manager: TicketManager
@@ -37,7 +39,9 @@ signal pause_event(is_paused: bool)
 var is_paused: bool = false:
     set(value):
         is_paused = value
+        tree_root.paused = value
         pause_event.emit(is_paused)
+        print("%sPAUSED GAME" % ("" if is_paused else "UN"))
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -75,8 +79,20 @@ func _call_first_setup() -> void:
     ui_manager.first_setup(self)
     ticket_manager.first_setup(ui_manager, pan.cooking_manager)
 
+# process pause inputs
+func _input(event: InputEvent) -> void:
+    if event.is_action_pressed("pause"):
+        if not is_paused:
+            is_paused = true
+        else:
+            is_paused = false
+    if event.is_action_pressed("pause_menu"):
+
+        pass
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+
 
     match game_state:
         GameData.GameState.FIRST_LOAD:
