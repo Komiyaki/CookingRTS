@@ -13,6 +13,14 @@ const debug: bool = true
 @export var gm_interround_timer: Timer
 @export var gm_ticket_spawn_timer: Timer
 
+@export var high_score: int = 0
+
+signal points_change_event(previous_amount: int, new_amount: int)
+@export var current_points: int = 0:
+    set(value):
+        points_change_event.emit(current_points, value)
+        current_points = value
+
 signal game_state_event(previous_state: GameData.GameState, new_state: GameData.GameState)
 @export var game_state: GameData.GameState = GameData.GameState.FIRST_LOAD:
     set(value):
@@ -121,3 +129,6 @@ func _interround_timer_end() -> void:
 
 func _spawn_ticket_timer_end() -> void:
     ticket_manager.spawn_ticket()
+
+func _process_point_event(amount: int) -> void:
+    current_points += amount

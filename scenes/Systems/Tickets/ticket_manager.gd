@@ -14,6 +14,8 @@ const DISH_DICTIONARY_LEN: int = len(RecipeDictionary.recipe_dict) - 1
 
 @export var plate_process_queue: Array
 
+signal point_event(amount: int)
+
 # TODO: implement plate/ticket scoring
 # @export var plate_zone:
 # Object to detect completed dishes, pick them up and grade
@@ -119,5 +121,6 @@ func grade_completed_plate(plate_ingredients: Dictionary) -> bool:
     tickets.erase(ticket_id_to_complete)
 
     print("Successful Plate!")
+    point_event.emit(GameData.PLATE_SUCESS_POINTS)
 
     return true
